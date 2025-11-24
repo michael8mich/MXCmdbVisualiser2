@@ -132,8 +132,7 @@ body {
 }
 
 .icon-wrapper {
-  background: var(--accent-color);
-  color: white;
+  background: transparent;
   border-radius: 8px;
   padding: 8px;
   display: flex;
@@ -143,7 +142,7 @@ body {
 }
 
 .icon-wrapper.error {
-  background: var(--error-color);
+  background: transparent;
 }
 
 .node-details {

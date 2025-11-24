@@ -14,7 +14,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Maximize2, Minimize2 } from 'lucide-react';
 import 'reactflow/dist/style.css';
 
-import CustomNode from './CustomNode';
+import CustomNode, { assetTypeColorMap, iconMap } from './CustomNode';
 import ConnectionDrawer from './ConnectionDrawer';
 import AssetDrawer from './AssetDrawer';
 import SearchableSelect from './SearchableSelect';
@@ -57,7 +57,8 @@ const TopologyMap = () => {
     } | null>(null);
     const [assetDrawerOpen, setAssetDrawerOpen] = useState(false);
     const [selectedAsset, setSelectedAsset] = useState<any>(null);
-    const [legendExpanded, setLegendExpanded] = useState(true);
+    const [legendExpanded, setLegendExpanded] = useState(false);
+    const [assetTypesExpanded, setAssetTypesExpanded] = useState(false);
 
     const selectedSystemId = searchParams.get('system');
 
@@ -90,7 +91,7 @@ const TopologyMap = () => {
         return { subNodes, subEdges };
     }, []);
 
-    // Helper to get visible elements based on expansion state (for Systems)
+    // Helper to get visible elements based on expansion state (shows both incoming and outgoing)
     const getVisibleElements = useCallback((rootId: string, expandedIds: Set<string>) => {
         const visibleNodeIds = new Set<string>([rootId]);
         const visibleEdgeIds = new Set<string>();
@@ -101,10 +102,19 @@ const TopologyMap = () => {
 
             if (currentId === rootId || expandedIds.has(currentId)) {
                 rawData.connections.forEach((conn, index) => {
+                    // Show outgoing connections (where current is source)
                     if (conn.source === currentId) {
                         if (!visibleNodeIds.has(conn.target)) {
                             visibleNodeIds.add(conn.target);
                             queue.push(conn.target);
+                        }
+                        visibleEdgeIds.add(`e${index}`);
+                    }
+                    // Show incoming connections (where current is target)
+                    if (conn.target === currentId) {
+                        if (!visibleNodeIds.has(conn.source)) {
+                            visibleNodeIds.add(conn.source);
+                            queue.push(conn.source);
                         }
                         visibleEdgeIds.add(`e${index}`);
                     }
@@ -382,40 +392,108 @@ const TopologyMap = () => {
                 gap: '10px',
                 alignItems: dir === 'rtl' ? 'flex-start' : 'flex-end'
             }}>
-                {/* Legend */}
+                {/* Combined Legend Panel */}
                 <div style={{
                     background: 'white',
-                    padding: '10px',
-                    borderRadius: '4px',
+                    padding: '12px',
+                    borderRadius: '8px',
                     border: '1px solid #ccc',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                    maxWidth: '280px',
+                    maxHeight: '500px',
+                    overflowY: 'auto'
                 }}>
-                    <h4
-                        onClick={() => setLegendExpanded(!legendExpanded)}
-                        style={{
-                            margin: '0 0 8px 0',
-                            fontSize: '14px',
-                            cursor: 'pointer',
-                            userSelect: 'none',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '6px',
-                            flexDirection: dir === 'rtl' ? 'row-reverse' : 'row'
-                        }}
-                    >
-                        <span>{legendExpanded ? '▼' : '▶'}</span>
-                        <span>{t('connectionTypes')}</span>
-                    </h4>
-                    {legendExpanded && (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                            {Object.entries(connectionColorMap).filter(([key]) => key !== 'default').map(([label, color]) => (
-                                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', flexDirection: dir === 'rtl' ? 'row-reverse' : 'row' }}>
-                                    <div style={{ width: '12px', height: '2px', background: color }}></div>
-                                    <span>{label}</span>
-                                </div>
-                            ))}
-                        </div>
-                    )}
+                    {/* Asset Types Section */}
+                    <div style={{ marginBottom: '16px' }}>
+                        <h4
+                            onClick={() => setAssetTypesExpanded(!assetTypesExpanded)}
+                            style={{
+                                margin: '0 0 8px 0',
+                                fontSize: '14px',
+                                fontWeight: '600',
+                                cursor: 'pointer',
+                                userSelect: 'none',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                flexDirection: dir === 'rtl' ? 'row-reverse' : 'row',
+                                color: '#1f2937'
+                            }}
+                        >
+                            <span>{assetTypesExpanded ? '▼' : '▶'}</span>
+                            <span>Asset Types</span>
+                        </h4>
+                        {assetTypesExpanded && (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', paddingLeft: '4px' }}>
+                                {Object.entries(assetTypeColorMap)
+                                    .filter(([key]) => key !== 'default' && !['Server', 'Switch', 'Router', 'Firewall', 'Database', 'Load Balancer', 'Workstation'].includes(key))
+                                    .map(([label, color]) => {
+                                        const Icon = iconMap[label] || iconMap.default;
+                                        return (
+                                            <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', flexDirection: dir === 'rtl' ? 'row-reverse' : 'row' }}>
+                                                <div style={{
+                                                    width: '20px',
+                                                    height: '20px',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    color: color,
+                                                    flexShrink: 0
+                                                }}>
+                                                    <Icon size={16} />
+                                                </div>
+                                                <span style={{ color: '#374151' }}>{label}</span>
+                                            </div>
+                                        );
+                                    })}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Divider */}
+                    <div style={{
+                        height: '1px',
+                        background: '#e5e7eb',
+                        margin: '12px 0'
+                    }}></div>
+
+                    {/* Connection Types Section */}
+                    <div>
+                        <h4
+                            onClick={() => setLegendExpanded(!legendExpanded)}
+                            style={{
+                                margin: '0 0 8px 0',
+                                fontSize: '14px',
+                                fontWeight: '600',
+                                cursor: 'pointer',
+                                userSelect: 'none',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                flexDirection: dir === 'rtl' ? 'row-reverse' : 'row',
+                                color: '#1f2937'
+                            }}
+                        >
+                            <span>{legendExpanded ? '▼' : '▶'}</span>
+                            <span>{t('connectionTypes')}</span>
+                        </h4>
+                        {legendExpanded && (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', paddingLeft: '4px' }}>
+                                {Object.entries(connectionColorMap).filter(([key]) => key !== 'default').map(([label, color]) => (
+                                    <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', flexDirection: dir === 'rtl' ? 'row-reverse' : 'row' }}>
+                                        <div style={{
+                                            width: '20px',
+                                            height: '3px',
+                                            background: color,
+                                            borderRadius: '2px',
+                                            flexShrink: 0
+                                        }}></div>
+                                        <span style={{ color: '#374151' }}>{label}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
