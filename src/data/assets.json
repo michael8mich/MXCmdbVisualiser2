@@ -1,0 +1,2049 @@
+{
+  "assets": [
+    {
+      "id": "sys-1",
+      "name": "Mail Service",
+      "type": "System"
+    },
+    {
+      "id": "sys-2",
+      "name": "HR",
+      "type": "System"
+    },
+    {
+      "id": "sys-3",
+      "name": "Knowledge Base",
+      "type": "System"
+    },
+    {
+      "id": "sys-4",
+      "name": "Billing",
+      "type": "System"
+    },
+    {
+      "id": "sys-5",
+      "name": "Finance",
+      "type": "System"
+    },
+    {
+      "id": "asset-0",
+      "name": "Printers 1",
+      "type": "Printers",
+      "status": "active",
+      "location": "Building 1, Floor 2"
+    },
+    {
+      "id": "asset-1",
+      "name": "Scanners 2",
+      "type": "Scanners",
+      "status": "warning",
+      "location": "Building 5, Floor 3"
+    },
+    {
+      "id": "asset-2",
+      "name": "Storage Devices 3",
+      "type": "Storage Devices",
+      "status": "maintenance",
+      "location": "Building 3, Floor 10"
+    },
+    {
+      "id": "asset-3",
+      "name": "Monitors 4",
+      "type": "Monitors",
+      "status": "active",
+      "location": "Building 5, Floor 1"
+    },
+    {
+      "id": "asset-4",
+      "name": "Mobile Devices 5",
+      "type": "Mobile Devices",
+      "status": "error",
+      "location": "Building 2, Floor 7"
+    },
+    {
+      "id": "asset-5",
+      "name": "Databases 6",
+      "type": "Databases",
+      "status": "warning",
+      "location": "Building 4, Floor 10"
+    },
+    {
+      "id": "asset-6",
+      "name": "Databases 7",
+      "type": "Databases",
+      "status": "warning",
+      "location": "Building 4, Floor 6"
+    },
+    {
+      "id": "asset-7",
+      "name": "AD Groups 8",
+      "type": "AD Groups",
+      "status": "error",
+      "location": "Building 2, Floor 7"
+    },
+    {
+      "id": "asset-8",
+      "name": "AD Groups 9",
+      "type": "AD Groups",
+      "status": "maintenance",
+      "location": "Building 1, Floor 10"
+    },
+    {
+      "id": "asset-9",
+      "name": "Software Items 10",
+      "type": "Software Items",
+      "status": "active",
+      "location": "Building 4, Floor 7"
+    },
+    {
+      "id": "asset-10",
+      "name": "Settings 11",
+      "type": "Settings",
+      "status": "error",
+      "location": "Building 1, Floor 10"
+    },
+    {
+      "id": "asset-11",
+      "name": "Barcode Readers 12",
+      "type": "Barcode Readers",
+      "status": "warning",
+      "location": "Building 5, Floor 6"
+    },
+    {
+      "id": "asset-12",
+      "name": "Interfaces 13",
+      "type": "Interfaces",
+      "status": "warning",
+      "location": "Building 2, Floor 10"
+    },
+    {
+      "id": "asset-13",
+      "name": "Permissions 14",
+      "type": "Permissions",
+      "status": "error",
+      "location": "Building 1, Floor 8"
+    },
+    {
+      "id": "asset-14",
+      "name": "Printers 15",
+      "type": "Printers",
+      "status": "warning",
+      "location": "Building 4, Floor 8"
+    },
+    {
+      "id": "asset-15",
+      "name": "Software Items 16",
+      "type": "Software Items",
+      "status": "maintenance",
+      "location": "Building 1, Floor 10"
+    },
+    {
+      "id": "asset-16",
+      "name": "Storage Devices 17",
+      "type": "Storage Devices",
+      "status": "warning",
+      "location": "Building 4, Floor 10"
+    },
+    {
+      "id": "asset-17",
+      "name": "Interfaces 18",
+      "type": "Interfaces",
+      "status": "active",
+      "location": "Building 4, Floor 2"
+    },
+    {
+      "id": "asset-18",
+      "name": "Permissions 19",
+      "type": "Permissions",
+      "status": "error",
+      "location": "Building 2, Floor 9"
+    },
+    {
+      "id": "asset-19",
+      "name": "Peripheral Equipment 20",
+      "type": "Peripheral Equipment",
+      "status": "error",
+      "location": "Building 5, Floor 6"
+    },
+    {
+      "id": "asset-20",
+      "name": "AD Groups 21",
+      "type": "AD Groups",
+      "status": "warning",
+      "location": "Building 2, Floor 4"
+    },
+    {
+      "id": "asset-21",
+      "name": "Storage Devices 22",
+      "type": "Storage Devices",
+      "status": "error",
+      "location": "Building 3, Floor 10"
+    },
+    {
+      "id": "asset-22",
+      "name": "Mobile Devices 23",
+      "type": "Mobile Devices",
+      "status": "maintenance",
+      "location": "Building 1, Floor 8"
+    },
+    {
+      "id": "asset-23",
+      "name": "Mobile Devices 24",
+      "type": "Mobile Devices",
+      "status": "error",
+      "location": "Building 5, Floor 7"
+    },
+    {
+      "id": "asset-24",
+      "name": "Communication Equipment 25",
+      "type": "Communication Equipment",
+      "status": "warning",
+      "location": "Building 2, Floor 3"
+    },
+    {
+      "id": "asset-25",
+      "name": "Hardware 26",
+      "type": "Hardware",
+      "status": "error",
+      "location": "Building 1, Floor 6"
+    },
+    {
+      "id": "asset-26",
+      "name": "Handheld Devices 27",
+      "type": "Handheld Devices",
+      "status": "error",
+      "location": "Building 1, Floor 10"
+    },
+    {
+      "id": "asset-27",
+      "name": "Settings 28",
+      "type": "Settings",
+      "status": "active",
+      "location": "Building 2, Floor 5"
+    },
+    {
+      "id": "asset-28",
+      "name": "Computers 29",
+      "type": "Computers",
+      "status": "error",
+      "ip": "192.168.146.39",
+      "location": "Building 2, Floor 3"
+    },
+    {
+      "id": "asset-29",
+      "name": "Handheld Devices 30",
+      "type": "Handheld Devices",
+      "status": "warning",
+      "location": "Building 1, Floor 3"
+    },
+    {
+      "id": "asset-30",
+      "name": "Service 31",
+      "type": "Service",
+      "status": "error",
+      "location": "Building 1, Floor 6"
+    },
+    {
+      "id": "asset-31",
+      "name": "Communication Equipment 32",
+      "type": "Communication Equipment",
+      "status": "maintenance",
+      "location": "Building 2, Floor 1"
+    },
+    {
+      "id": "asset-32",
+      "name": "Barcode Readers 33",
+      "type": "Barcode Readers",
+      "status": "active",
+      "location": "Building 3, Floor 1"
+    },
+    {
+      "id": "asset-33",
+      "name": "Settings 34",
+      "type": "Settings",
+      "status": "maintenance",
+      "location": "Building 1, Floor 8"
+    },
+    {
+      "id": "asset-34",
+      "name": "Information Security 35",
+      "type": "Information Security",
+      "status": "maintenance",
+      "location": "Building 3, Floor 2"
+    },
+    {
+      "id": "asset-35",
+      "name": "Monitors 36",
+      "type": "Monitors",
+      "status": "warning",
+      "location": "Building 1, Floor 8"
+    },
+    {
+      "id": "asset-36",
+      "name": "Hardware 37",
+      "type": "Hardware",
+      "status": "error",
+      "location": "Building 3, Floor 1"
+    },
+    {
+      "id": "asset-37",
+      "name": "Mobile Devices 38",
+      "type": "Mobile Devices",
+      "status": "active",
+      "location": "Building 1, Floor 2"
+    },
+    {
+      "id": "asset-38",
+      "name": "Software Items 39",
+      "type": "Software Items",
+      "status": "maintenance",
+      "location": "Building 4, Floor 4"
+    },
+    {
+      "id": "asset-39",
+      "name": "Monitors 40",
+      "type": "Monitors",
+      "status": "error",
+      "location": "Building 5, Floor 10"
+    },
+    {
+      "id": "asset-40",
+      "name": "Servers 41",
+      "type": "Servers",
+      "status": "error",
+      "ip": "192.168.103.169",
+      "location": "Building 2, Floor 1"
+    },
+    {
+      "id": "asset-41",
+      "name": "Communication Equipment 42",
+      "type": "Communication Equipment",
+      "status": "active",
+      "location": "Building 1, Floor 5"
+    },
+    {
+      "id": "asset-42",
+      "name": "Storage Devices 43",
+      "type": "Storage Devices",
+      "status": "maintenance",
+      "location": "Building 1, Floor 9"
+    },
+    {
+      "id": "asset-43",
+      "name": "Monitors 44",
+      "type": "Monitors",
+      "status": "active",
+      "location": "Building 4, Floor 6"
+    },
+    {
+      "id": "asset-44",
+      "name": "Hardware 45",
+      "type": "Hardware",
+      "status": "error",
+      "location": "Building 3, Floor 10"
+    },
+    {
+      "id": "asset-45",
+      "name": "AD Groups 46",
+      "type": "AD Groups",
+      "status": "active",
+      "location": "Building 2, Floor 7"
+    },
+    {
+      "id": "asset-46",
+      "name": "Servers 47",
+      "type": "Servers",
+      "status": "maintenance",
+      "ip": "192.168.230.102",
+      "location": "Building 2, Floor 4"
+    },
+    {
+      "id": "asset-47",
+      "name": "Hardware 48",
+      "type": "Hardware",
+      "status": "error",
+      "location": "Building 1, Floor 8"
+    },
+    {
+      "id": "asset-48",
+      "name": "Storage Devices 49",
+      "type": "Storage Devices",
+      "status": "active",
+      "location": "Building 5, Floor 7"
+    },
+    {
+      "id": "asset-49",
+      "name": "Information Security 50",
+      "type": "Information Security",
+      "status": "active",
+      "location": "Building 2, Floor 5"
+    },
+    {
+      "id": "asset-50",
+      "name": "Servers 51",
+      "type": "Servers",
+      "status": "active",
+      "ip": "192.168.102.28",
+      "location": "Building 4, Floor 7"
+    },
+    {
+      "id": "asset-51",
+      "name": "Mobile Devices 52",
+      "type": "Mobile Devices",
+      "status": "error",
+      "location": "Building 3, Floor 8"
+    },
+    {
+      "id": "asset-52",
+      "name": "Interfaces 53",
+      "type": "Interfaces",
+      "status": "warning",
+      "location": "Building 2, Floor 6"
+    },
+    {
+      "id": "asset-53",
+      "name": "Settings 54",
+      "type": "Settings",
+      "status": "error",
+      "location": "Building 2, Floor 3"
+    },
+    {
+      "id": "asset-54",
+      "name": "Databases 55",
+      "type": "Databases",
+      "status": "error",
+      "location": "Building 5, Floor 4"
+    },
+    {
+      "id": "asset-55",
+      "name": "Servers 56",
+      "type": "Servers",
+      "status": "maintenance",
+      "ip": "192.168.209.104",
+      "location": "Building 2, Floor 4"
+    },
+    {
+      "id": "asset-56",
+      "name": "Information Security 57",
+      "type": "Information Security",
+      "status": "warning",
+      "location": "Building 2, Floor 6"
+    },
+    {
+      "id": "asset-57",
+      "name": "Mobile Devices 58",
+      "type": "Mobile Devices",
+      "status": "maintenance",
+      "location": "Building 1, Floor 9"
+    },
+    {
+      "id": "asset-58",
+      "name": "Monitors 59",
+      "type": "Monitors",
+      "status": "warning",
+      "location": "Building 1, Floor 6"
+    },
+    {
+      "id": "asset-59",
+      "name": "Handheld Devices 60",
+      "type": "Handheld Devices",
+      "status": "active",
+      "location": "Building 1, Floor 8"
+    },
+    {
+      "id": "asset-60",
+      "name": "Printers 61",
+      "type": "Printers",
+      "status": "maintenance",
+      "location": "Building 2, Floor 6"
+    },
+    {
+      "id": "asset-61",
+      "name": "Interfaces 62",
+      "type": "Interfaces",
+      "status": "active",
+      "location": "Building 5, Floor 1"
+    },
+    {
+      "id": "asset-62",
+      "name": "Communication Equipment 63",
+      "type": "Communication Equipment",
+      "status": "maintenance",
+      "location": "Building 2, Floor 6"
+    },
+    {
+      "id": "asset-63",
+      "name": "Databases 64",
+      "type": "Databases",
+      "status": "error",
+      "location": "Building 3, Floor 3"
+    },
+    {
+      "id": "asset-64",
+      "name": "Scanners 65",
+      "type": "Scanners",
+      "status": "error",
+      "location": "Building 4, Floor 5"
+    },
+    {
+      "id": "asset-65",
+      "name": "Permissions 66",
+      "type": "Permissions",
+      "status": "active",
+      "location": "Building 4, Floor 8"
+    },
+    {
+      "id": "asset-66",
+      "name": "Software Items 67",
+      "type": "Software Items",
+      "status": "error",
+      "location": "Building 5, Floor 1"
+    },
+    {
+      "id": "asset-67",
+      "name": "Information Security 68",
+      "type": "Information Security",
+      "status": "warning",
+      "location": "Building 4, Floor 3"
+    },
+    {
+      "id": "asset-68",
+      "name": "Barcode Readers 69",
+      "type": "Barcode Readers",
+      "status": "warning",
+      "location": "Building 5, Floor 6"
+    },
+    {
+      "id": "asset-69",
+      "name": "AD Groups 70",
+      "type": "AD Groups",
+      "status": "maintenance",
+      "location": "Building 3, Floor 3"
+    },
+    {
+      "id": "asset-70",
+      "name": "Information Security 71",
+      "type": "Information Security",
+      "status": "error",
+      "location": "Building 4, Floor 6"
+    },
+    {
+      "id": "asset-71",
+      "name": "Peripheral Equipment 72",
+      "type": "Peripheral Equipment",
+      "status": "active",
+      "location": "Building 4, Floor 8"
+    },
+    {
+      "id": "asset-72",
+      "name": "Software Items 73",
+      "type": "Software Items",
+      "status": "warning",
+      "location": "Building 5, Floor 5"
+    },
+    {
+      "id": "asset-73",
+      "name": "Scanners 74",
+      "type": "Scanners",
+      "status": "error",
+      "location": "Building 4, Floor 3"
+    },
+    {
+      "id": "asset-74",
+      "name": "Printers 75",
+      "type": "Printers",
+      "status": "active",
+      "location": "Building 1, Floor 9"
+    },
+    {
+      "id": "asset-75",
+      "name": "Communication Equipment 76",
+      "type": "Communication Equipment",
+      "status": "active",
+      "location": "Building 4, Floor 7"
+    },
+    {
+      "id": "asset-76",
+      "name": "Settings 77",
+      "type": "Settings",
+      "status": "warning",
+      "location": "Building 2, Floor 7"
+    },
+    {
+      "id": "asset-77",
+      "name": "Mobile Devices 78",
+      "type": "Mobile Devices",
+      "status": "warning",
+      "location": "Building 1, Floor 10"
+    },
+    {
+      "id": "asset-78",
+      "name": "Communication Equipment 79",
+      "type": "Communication Equipment",
+      "status": "error",
+      "location": "Building 1, Floor 6"
+    },
+    {
+      "id": "asset-79",
+      "name": "Service 80",
+      "type": "Service",
+      "status": "error",
+      "location": "Building 1, Floor 6"
+    },
+    {
+      "id": "asset-80",
+      "name": "Peripheral Equipment 81",
+      "type": "Peripheral Equipment",
+      "status": "warning",
+      "location": "Building 1, Floor 7"
+    },
+    {
+      "id": "asset-81",
+      "name": "Storage Devices 82",
+      "type": "Storage Devices",
+      "status": "active",
+      "location": "Building 4, Floor 4"
+    },
+    {
+      "id": "asset-82",
+      "name": "Databases 83",
+      "type": "Databases",
+      "status": "warning",
+      "location": "Building 3, Floor 5"
+    },
+    {
+      "id": "asset-83",
+      "name": "Hardware 84",
+      "type": "Hardware",
+      "status": "maintenance",
+      "location": "Building 1, Floor 7"
+    },
+    {
+      "id": "asset-84",
+      "name": "Monitors 85",
+      "type": "Monitors",
+      "status": "maintenance",
+      "location": "Building 3, Floor 7"
+    },
+    {
+      "id": "asset-85",
+      "name": "Hardware 86",
+      "type": "Hardware",
+      "status": "warning",
+      "location": "Building 4, Floor 10"
+    },
+    {
+      "id": "asset-86",
+      "name": "Monitors 87",
+      "type": "Monitors",
+      "status": "active",
+      "location": "Building 2, Floor 7"
+    },
+    {
+      "id": "asset-87",
+      "name": "Mobile Devices 88",
+      "type": "Mobile Devices",
+      "status": "active",
+      "location": "Building 3, Floor 8"
+    },
+    {
+      "id": "asset-88",
+      "name": "AD Groups 89",
+      "type": "AD Groups",
+      "status": "maintenance",
+      "location": "Building 4, Floor 7"
+    },
+    {
+      "id": "asset-89",
+      "name": "Monitors 90",
+      "type": "Monitors",
+      "status": "active",
+      "location": "Building 4, Floor 7"
+    },
+    {
+      "id": "asset-90",
+      "name": "Interfaces 91",
+      "type": "Interfaces",
+      "status": "warning",
+      "location": "Building 5, Floor 6"
+    },
+    {
+      "id": "asset-91",
+      "name": "Handheld Devices 92",
+      "type": "Handheld Devices",
+      "status": "error",
+      "location": "Building 5, Floor 5"
+    },
+    {
+      "id": "asset-92",
+      "name": "Settings 93",
+      "type": "Settings",
+      "status": "error",
+      "location": "Building 5, Floor 5"
+    },
+    {
+      "id": "asset-93",
+      "name": "Permissions 94",
+      "type": "Permissions",
+      "status": "error",
+      "location": "Building 4, Floor 3"
+    },
+    {
+      "id": "asset-94",
+      "name": "Barcode Readers 95",
+      "type": "Barcode Readers",
+      "status": "error",
+      "location": "Building 2, Floor 6"
+    },
+    {
+      "id": "asset-95",
+      "name": "Settings 96",
+      "type": "Settings",
+      "status": "error",
+      "location": "Building 2, Floor 3"
+    },
+    {
+      "id": "asset-96",
+      "name": "Service 97",
+      "type": "Service",
+      "status": "error",
+      "location": "Building 1, Floor 3"
+    },
+    {
+      "id": "asset-97",
+      "name": "Barcode Readers 98",
+      "type": "Barcode Readers",
+      "status": "error",
+      "location": "Building 4, Floor 1"
+    },
+    {
+      "id": "asset-98",
+      "name": "AD Groups 99",
+      "type": "AD Groups",
+      "status": "warning",
+      "location": "Building 2, Floor 5"
+    },
+    {
+      "id": "asset-99",
+      "name": "Service 100",
+      "type": "Service",
+      "status": "warning",
+      "location": "Building 4, Floor 5"
+    },
+    {
+      "id": "asset-100",
+      "name": "Software Items 101",
+      "type": "Software Items",
+      "status": "error",
+      "location": "Building 1, Floor 6"
+    },
+    {
+      "id": "asset-101",
+      "name": "Scanners 102",
+      "type": "Scanners",
+      "status": "active",
+      "location": "Building 5, Floor 7"
+    },
+    {
+      "id": "asset-102",
+      "name": "Information Security 103",
+      "type": "Information Security",
+      "status": "warning",
+      "location": "Building 5, Floor 8"
+    },
+    {
+      "id": "asset-103",
+      "name": "Printers 104",
+      "type": "Printers",
+      "status": "maintenance",
+      "location": "Building 4, Floor 9"
+    },
+    {
+      "id": "asset-104",
+      "name": "Mobile Devices 105",
+      "type": "Mobile Devices",
+      "status": "warning",
+      "location": "Building 5, Floor 5"
+    },
+    {
+      "id": "asset-105",
+      "name": "Printers 106",
+      "type": "Printers",
+      "status": "warning",
+      "location": "Building 5, Floor 6"
+    },
+    {
+      "id": "asset-106",
+      "name": "Hardware 107",
+      "type": "Hardware",
+      "status": "active",
+      "location": "Building 4, Floor 1"
+    },
+    {
+      "id": "asset-107",
+      "name": "Databases 108",
+      "type": "Databases",
+      "status": "error",
+      "location": "Building 5, Floor 7"
+    },
+    {
+      "id": "asset-108",
+      "name": "Hardware 109",
+      "type": "Hardware",
+      "status": "maintenance",
+      "location": "Building 3, Floor 2"
+    },
+    {
+      "id": "asset-109",
+      "name": "Servers 110",
+      "type": "Servers",
+      "status": "warning",
+      "ip": "192.168.252.141",
+      "location": "Building 5, Floor 2"
+    },
+    {
+      "id": "asset-110",
+      "name": "Printers 111",
+      "type": "Printers",
+      "status": "maintenance",
+      "location": "Building 5, Floor 5"
+    },
+    {
+      "id": "asset-111",
+      "name": "Permissions 112",
+      "type": "Permissions",
+      "status": "error",
+      "location": "Building 5, Floor 10"
+    },
+    {
+      "id": "asset-112",
+      "name": "Information Security 113",
+      "type": "Information Security",
+      "status": "warning",
+      "location": "Building 4, Floor 1"
+    },
+    {
+      "id": "asset-113",
+      "name": "Service 114",
+      "type": "Service",
+      "status": "active",
+      "location": "Building 1, Floor 1"
+    },
+    {
+      "id": "asset-114",
+      "name": "Scanners 115",
+      "type": "Scanners",
+      "status": "active",
+      "location": "Building 1, Floor 10"
+    },
+    {
+      "id": "asset-115",
+      "name": "Storage Devices 116",
+      "type": "Storage Devices",
+      "status": "maintenance",
+      "location": "Building 5, Floor 8"
+    },
+    {
+      "id": "asset-116",
+      "name": "Interfaces 117",
+      "type": "Interfaces",
+      "status": "error",
+      "location": "Building 5, Floor 8"
+    },
+    {
+      "id": "asset-117",
+      "name": "Printers 118",
+      "type": "Printers",
+      "status": "error",
+      "location": "Building 1, Floor 9"
+    },
+    {
+      "id": "asset-118",
+      "name": "Peripheral Equipment 119",
+      "type": "Peripheral Equipment",
+      "status": "maintenance",
+      "location": "Building 4, Floor 6"
+    },
+    {
+      "id": "asset-119",
+      "name": "AD Groups 120",
+      "type": "AD Groups",
+      "status": "warning",
+      "location": "Building 5, Floor 10"
+    },
+    {
+      "id": "asset-120",
+      "name": "Scanners 121",
+      "type": "Scanners",
+      "status": "maintenance",
+      "location": "Building 4, Floor 3"
+    },
+    {
+      "id": "asset-121",
+      "name": "Servers 122",
+      "type": "Servers",
+      "status": "warning",
+      "ip": "192.168.212.117",
+      "location": "Building 5, Floor 6"
+    },
+    {
+      "id": "asset-122",
+      "name": "Software Items 123",
+      "type": "Software Items",
+      "status": "maintenance",
+      "location": "Building 1, Floor 7"
+    },
+    {
+      "id": "asset-123",
+      "name": "Permissions 124",
+      "type": "Permissions",
+      "status": "error",
+      "location": "Building 1, Floor 2"
+    },
+    {
+      "id": "asset-124",
+      "name": "AD Groups 125",
+      "type": "AD Groups",
+      "status": "error",
+      "location": "Building 2, Floor 10"
+    },
+    {
+      "id": "asset-125",
+      "name": "Printers 126",
+      "type": "Printers",
+      "status": "active",
+      "location": "Building 5, Floor 4"
+    },
+    {
+      "id": "asset-126",
+      "name": "Barcode Readers 127",
+      "type": "Barcode Readers",
+      "status": "active",
+      "location": "Building 5, Floor 1"
+    },
+    {
+      "id": "asset-127",
+      "name": "Service 128",
+      "type": "Service",
+      "status": "active",
+      "location": "Building 5, Floor 4"
+    },
+    {
+      "id": "asset-128",
+      "name": "Communication Equipment 129",
+      "type": "Communication Equipment",
+      "status": "error",
+      "location": "Building 4, Floor 10"
+    },
+    {
+      "id": "asset-129",
+      "name": "Printers 130",
+      "type": "Printers",
+      "status": "active",
+      "location": "Building 3, Floor 3"
+    },
+    {
+      "id": "asset-130",
+      "name": "Scanners 131",
+      "type": "Scanners",
+      "status": "maintenance",
+      "location": "Building 1, Floor 7"
+    },
+    {
+      "id": "asset-131",
+      "name": "Databases 132",
+      "type": "Databases",
+      "status": "maintenance",
+      "location": "Building 4, Floor 6"
+    },
+    {
+      "id": "asset-132",
+      "name": "Software Items 133",
+      "type": "Software Items",
+      "status": "warning",
+      "location": "Building 1, Floor 6"
+    },
+    {
+      "id": "asset-133",
+      "name": "Monitors 134",
+      "type": "Monitors",
+      "status": "maintenance",
+      "location": "Building 3, Floor 8"
+    },
+    {
+      "id": "asset-134",
+      "name": "Software Items 135",
+      "type": "Software Items",
+      "status": "error",
+      "location": "Building 3, Floor 7"
+    },
+    {
+      "id": "asset-135",
+      "name": "Communication Equipment 136",
+      "type": "Communication Equipment",
+      "status": "warning",
+      "location": "Building 4, Floor 4"
+    },
+    {
+      "id": "asset-136",
+      "name": "Permissions 137",
+      "type": "Permissions",
+      "status": "warning",
+      "location": "Building 4, Floor 9"
+    },
+    {
+      "id": "asset-137",
+      "name": "Computers 138",
+      "type": "Computers",
+      "status": "error",
+      "ip": "192.168.107.32",
+      "location": "Building 3, Floor 2"
+    },
+    {
+      "id": "asset-138",
+      "name": "Settings 139",
+      "type": "Settings",
+      "status": "warning",
+      "location": "Building 1, Floor 8"
+    },
+    {
+      "id": "asset-139",
+      "name": "AD Groups 140",
+      "type": "AD Groups",
+      "status": "error",
+      "location": "Building 1, Floor 3"
+    },
+    {
+      "id": "asset-140",
+      "name": "Interfaces 141",
+      "type": "Interfaces",
+      "status": "maintenance",
+      "location": "Building 3, Floor 10"
+    },
+    {
+      "id": "asset-141",
+      "name": "Permissions 142",
+      "type": "Permissions",
+      "status": "warning",
+      "location": "Building 5, Floor 9"
+    },
+    {
+      "id": "asset-142",
+      "name": "Handheld Devices 143",
+      "type": "Handheld Devices",
+      "status": "active",
+      "location": "Building 4, Floor 9"
+    },
+    {
+      "id": "asset-143",
+      "name": "Software Items 144",
+      "type": "Software Items",
+      "status": "error",
+      "location": "Building 1, Floor 10"
+    },
+    {
+      "id": "asset-144",
+      "name": "Peripheral Equipment 145",
+      "type": "Peripheral Equipment",
+      "status": "error",
+      "location": "Building 2, Floor 1"
+    },
+    {
+      "id": "asset-145",
+      "name": "Service 146",
+      "type": "Service",
+      "status": "warning",
+      "location": "Building 3, Floor 3"
+    },
+    {
+      "id": "asset-146",
+      "name": "Scanners 147",
+      "type": "Scanners",
+      "status": "error",
+      "location": "Building 2, Floor 10"
+    },
+    {
+      "id": "asset-147",
+      "name": "Storage Devices 148",
+      "type": "Storage Devices",
+      "status": "active",
+      "location": "Building 5, Floor 1"
+    },
+    {
+      "id": "asset-148",
+      "name": "Mobile Devices 149",
+      "type": "Mobile Devices",
+      "status": "maintenance",
+      "location": "Building 4, Floor 5"
+    },
+    {
+      "id": "asset-149",
+      "name": "Databases 150",
+      "type": "Databases",
+      "status": "error",
+      "location": "Building 1, Floor 6"
+    }
+  ],
+  "connections": [
+    {
+      "source": "sys-2",
+      "target": "asset-0",
+      "label": "Hosts"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-1",
+      "label": "Hosts"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-2",
+      "label": "Hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-3",
+      "label": "Hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-4",
+      "label": "Hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-5",
+      "label": "Hosts"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-6",
+      "label": "Hosts"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-7",
+      "label": "Hosts"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-8",
+      "label": "Hosts"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-9",
+      "label": "Hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-10",
+      "label": "Hosts"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-11",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-12",
+      "label": "Uses"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-13",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-14",
+      "label": "Triggers"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-15",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-15",
+      "target": "asset-8",
+      "label": "is contained by"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-16",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-17",
+      "label": "Replicates to"
+    },
+    {
+      "source": "asset-17",
+      "target": "asset-7",
+      "label": "runs"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-18",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-19",
+      "label": "services"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-20",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-21",
+      "label": "provides to"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-22",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-23",
+      "label": "communicates with"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-24",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-25",
+      "label": "Uses"
+    },
+    {
+      "source": "asset-25",
+      "target": "asset-8",
+      "label": "is contained by"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-26",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-27",
+      "label": "Triggers"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-28",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-29",
+      "label": "serves"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-30",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-31",
+      "label": "runs"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-32",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-33",
+      "label": "Replicates to"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-34",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-35",
+      "label": "connects to"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-36",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-36",
+      "target": "asset-20",
+      "label": "is contained by"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-37",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-38",
+      "label": "services"
+    },
+    {
+      "source": "asset-38",
+      "target": "asset-20",
+      "label": "Uses"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-39",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-40",
+      "label": "provides to"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-41",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-42",
+      "label": "communicates with"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-43",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-44",
+      "label": "Triggers"
+    },
+    {
+      "source": "asset-44",
+      "target": "asset-8",
+      "label": "runs"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-45",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-46",
+      "label": "serves"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-47",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-47",
+      "target": "asset-45",
+      "label": "is contained by"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-48",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-49",
+      "label": "Replicates to"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-50",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-51",
+      "label": "connects to"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-52",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-52",
+      "target": "asset-45",
+      "label": "Uses"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-53",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-54",
+      "label": "services"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-55",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-56",
+      "label": "provides to"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-57",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-58",
+      "label": "communicates with"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-59",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-60",
+      "label": "Triggers"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-61",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-61",
+      "target": "asset-45",
+      "label": "runs"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-62",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-63",
+      "label": "serves"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-64",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-65",
+      "label": "Replicates to"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-66",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-66",
+      "target": "asset-7",
+      "label": "Uses"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-67",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-68",
+      "label": "connects to"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-69",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-70",
+      "label": "services"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-71",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-72",
+      "label": "provides to"
+    },
+    {
+      "source": "asset-72",
+      "target": "asset-69",
+      "label": "communicates with"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-73",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-74",
+      "label": "Triggers"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-75",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-76",
+      "label": "runs"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-77",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-78",
+      "label": "serves"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-79",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-80",
+      "label": "Replicates to"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-81",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-82",
+      "label": "connects to"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-83",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-83",
+      "target": "asset-69",
+      "label": "is contained by"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-84",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-85",
+      "label": "Uses"
+    },
+    {
+      "source": "asset-85",
+      "target": "asset-69",
+      "label": "is contained by"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-86",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-87",
+      "label": "services"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-88",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-89",
+      "label": "provides to"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-90",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-90",
+      "target": "asset-88",
+      "label": "communicates with"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-91",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-92",
+      "label": "Triggers"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-93",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-94",
+      "label": "runs"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-95",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-96",
+      "label": "serves"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-97",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-98",
+      "label": "Replicates to"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-99",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-100",
+      "label": "connects to"
+    },
+    {
+      "source": "asset-100",
+      "target": "asset-98",
+      "label": "Uses"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-101",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-102",
+      "label": "services"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-103",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-104",
+      "label": "provides to"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-105",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-106",
+      "label": "communicates with"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-107",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-108",
+      "label": "Triggers"
+    },
+    {
+      "source": "asset-108",
+      "target": "asset-98",
+      "label": "runs"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-109",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-110",
+      "label": "serves"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-111",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-112",
+      "label": "Replicates to"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-113",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-114",
+      "label": "connects to"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-115",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-116",
+      "label": "Uses"
+    },
+    {
+      "source": "asset-116",
+      "target": "asset-111",
+      "label": "is contained by"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-117",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-117",
+      "target": "asset-89",
+      "label": "services"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-118",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-118",
+      "target": "asset-111",
+      "label": "connects to"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-119",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-120",
+      "label": "provides to"
+    },
+    {
+      "source": "asset-120",
+      "target": "asset-113",
+      "label": "communicates with"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-121",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-122",
+      "label": "Triggers"
+    },
+    {
+      "source": "asset-122",
+      "target": "asset-88",
+      "label": "runs"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-123",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-124",
+      "label": "serves"
+    },
+    {
+      "source": "asset-124",
+      "target": "asset-106",
+      "label": "Replicates to"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-125",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-125",
+      "target": "asset-107",
+      "label": "connects to"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-126",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-126",
+      "target": "asset-19",
+      "label": "Uses"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-127",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-128",
+      "label": "services"
+    },
+    {
+      "source": "asset-128",
+      "target": "asset-106",
+      "label": "is contained by"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-129",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-129",
+      "target": "asset-106",
+      "label": "provides to"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-130",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-130",
+      "target": "asset-107",
+      "label": "communicates with"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-131",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-131",
+      "target": "asset-113",
+      "label": "Triggers"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-132",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-132",
+      "target": "asset-111",
+      "label": "runs"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-133",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-133",
+      "target": "asset-88",
+      "label": "serves"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-134",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-134",
+      "target": "asset-106",
+      "label": "Replicates to"
+    },
+    {
+      "source": "sys-3",
+      "target": "asset-135",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-135",
+      "target": "asset-106",
+      "label": "connects to"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-136",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-137",
+      "label": "Uses"
+    },
+    {
+      "source": "asset-137",
+      "target": "asset-54",
+      "label": "is contained by"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-138",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-138",
+      "target": "asset-28",
+      "label": "services"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-139",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-5",
+      "target": "asset-140",
+      "label": "provides to"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-141",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-142",
+      "label": "communicates with"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-143",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-4",
+      "target": "asset-144",
+      "label": "Triggers"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-145",
+      "label": "hosts"
+    },
+    {
+      "source": "asset-145",
+      "target": "asset-13",
+      "label": "runs"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-146",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-147",
+      "label": "serves"
+    },
+    {
+      "source": "asset-147",
+      "target": "asset-31",
+      "label": "Replicates to"
+    },
+    {
+      "source": "sys-2",
+      "target": "asset-148",
+      "label": "hosts"
+    },
+    {
+      "source": "sys-1",
+      "target": "asset-149",
+      "label": "Uses"
+    },
+    {
+      "source": "sys-1",
+      "target": "sys-2",
+      "label": "communicates with"
+    },
+    {
+      "source": "sys-1",
+      "target": "sys-5",
+      "label": "connects to"
+    },
+    {
+      "source": "sys-2",
+      "target": "sys-3",
+      "label": "provides to"
+    },
+    {
+      "source": "sys-4",
+      "target": "sys-5",
+      "label": "Replicates to"
+    },
+    {
+      "source": "sys-4",
+      "target": "sys-2",
+      "label": "services"
+    },
+    {
+      "source": "sys-3",
+      "target": "sys-1",
+      "label": "Triggers"
+    }
+  ]
+}
