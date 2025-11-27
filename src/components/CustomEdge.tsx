@@ -11,6 +11,7 @@ const CustomEdge = ({
     style = {},
     markerEnd,
     label,
+    data,
 }: EdgeProps) => {
     const [edgePath, labelX, labelY] = getSmoothStepPath({
         sourceX,
@@ -21,8 +22,10 @@ const CustomEdge = ({
         targetPosition,
     });
 
+    const animationDelay = data?.animationDelay || '0s';
+
     return (
-        <>
+        <g className="animate-fade-in" style={{ animationDelay }}>
             <BaseEdge path={edgePath} markerEnd={markerEnd} style={style} />
             <circle r="4" fill={style.stroke || '#f5576c'}>
                 <animateMotion dur="2s" repeatCount="indefinite" path={edgePath}>
@@ -45,14 +48,15 @@ const CustomEdge = ({
                             color: style.stroke,
                             boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                             zIndex: 10,
+                            animationDelay,
                         }}
-                        className="nodrag nopan"
+                        className="nodrag nopan animate-fade-in"
                     >
                         {label}
                     </div>
                 </EdgeLabelRenderer>
             )}
-        </>
+        </g>
     );
 };
 

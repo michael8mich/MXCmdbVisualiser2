@@ -117,9 +117,13 @@ const CustomNode = ({ data }: NodeProps) => {
 
     // Get translated type name
     const translatedType = (t as any).assetTypes?.[data.type] || data.type;
+    const animationDelay = data.animationDelay || '0s';
 
     return (
-        <div className={`custom-node ${isError ? 'error' : ''} ${isSystem ? 'system-node' : ''} ${isSelected ? 'selected-system' : ''}`}>
+        <div
+            className={`custom-node ${isError ? 'error' : ''} ${isSystem ? 'system-node' : ''} ${isSelected ? 'selected-system' : ''} animate-scale-in`}
+            style={{ animationDelay }}
+        >
             <Handle type="target" position={Position.Top} className="handle" />
 
             <div className="node-content">

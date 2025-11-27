@@ -164,7 +164,7 @@ const TopologyMap = () => {
             }
         }
 
-        const initialNodes: Node[] = targetNodes.map((asset) => ({
+        const initialNodes: Node[] = targetNodes.map((asset, index) => ({
             id: asset.id,
             type: 'custom',
             data: {
@@ -172,12 +172,13 @@ const TopologyMap = () => {
                 label: asset.name,
                 childCount: childCounts.get(asset.id) || 0,
                 expanded: expandedNodeIds.has(asset.id),
-                isSelected: asset.id === selectedSystemId
+                isSelected: asset.id === selectedSystemId,
+                animationDelay: `${index * 0.05}s`, // Staggered delay for nodes
             },
             position: { x: 0, y: 0 },
         }));
 
-        const initialEdges: Edge[] = targetEdges.map((conn) => {
+        const initialEdges: Edge[] = targetEdges.map((conn, index) => {
             const color = connectionColorMap[conn.label] || connectionColorMap.default;
             return {
                 id: conn.id,
@@ -186,6 +187,9 @@ const TopologyMap = () => {
                 label: conn.label,
                 type: 'customEdge',
                 animated: false,
+                data: {
+                    animationDelay: `${(targetNodes.length * 0.05) + (index * 0.02)}s`, // Edges appear after nodes
+                },
                 style: { stroke: color, strokeWidth: 2, cursor: 'pointer' },
                 labelStyle: { fill: color, fontWeight: 700 },
                 interactionWidth: 20,
