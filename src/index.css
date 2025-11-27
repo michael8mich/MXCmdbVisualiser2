@@ -32,7 +32,37 @@ body {
 
 .react-flow__edge-path {
   stroke: #9ca3af;
-  stroke-width: 2;
+  stroke-width: 4;
+  transition: stroke-width 0.2s ease, stroke 0.2s ease;
+  cursor: pointer;
+}
+
+/* Increase the hover area */
+.react-flow__edge {
+  pointer-events: all;
+}
+
+.react-flow__edge path {
+  stroke-width: 4;
+  transition: stroke-width 0.2s ease, stroke 0.2s ease;
+}
+
+/* Hover effects */
+.react-flow__edge:hover .react-flow__edge-path,
+.react-flow__edge:hover path {
+  stroke-width: 8 !important;
+  stroke: #374151 !important;
+}
+
+.react-flow__edge:hover .react-flow__edge-text {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Make the edge interaction area VERY LARGE for easy hovering */
+.react-flow__edge-interaction {
+  stroke-width: 50 !important;
+  stroke: transparent;
 }
 
 .react-flow__controls {
