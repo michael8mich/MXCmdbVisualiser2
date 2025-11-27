@@ -316,6 +316,19 @@ const TopologyMap = () => {
         setExpandedNodeIds(new Set());
     };
 
+    const [rfInstance, setRfInstance] = useState<any>(null);
+
+    // Auto-fit view when system or layout changes
+    useEffect(() => {
+        if (rfInstance && nodes.length > 0) {
+            // Small delay to ensure nodes are rendered and measured
+            const timer = setTimeout(() => {
+                rfInstance.fitView({ duration: 800, padding: 0.2 });
+            }, 100);
+            return () => clearTimeout(timer);
+        }
+    }, [selectedSystemId, layoutType, rfInstance, nodes.length]);
+
     return (
         <div className="topology-container" style={{ width: '100vw', height: '100vh', direction: dir }}>
             <div style={{
@@ -516,6 +529,7 @@ const TopologyMap = () => {
                 onNodeClick={onNodeClick}
                 onNodeContextMenu={onNodeContextMenu}
                 onEdgeClick={onEdgeClick}
+                onInit={setRfInstance}
                 nodeTypes={nodeTypes}
                 edgeTypes={edgeTypes}
                 connectionLineType={ConnectionLineType.SmoothStep}
