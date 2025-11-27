@@ -33,6 +33,7 @@ export const iconMap: Record<string, React.ElementType> = {
     'Storage and Backup': Cloud,
     'Service': Wrench,
     'Mobile Devices': Smartphone,
+    'Unknown': HelpCircle,
     // Legacy types
     'Server': Server,
     'Switch': Network,
@@ -88,6 +89,9 @@ export const assetTypeColorMap: Record<string, string> = {
     'Settings': '#6b7280',
     'Miscellaneous': '#9ca3af',
     'Entitlement Packages': '#78716c',
+
+    // Unknown (Distinct gray)
+    'Unknown': '#94a3b8', // Slate-400
 
     // Legacy types
     'Server': '#3b82f6',

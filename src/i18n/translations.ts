@@ -69,6 +69,7 @@ export const translations = {
             'Storage and Backup': 'Storage and Backup',
             'Service': 'Service',
             'Mobile Devices': 'Mobile Devices',
+            'Unknown': 'Unknown',
         },
     },
     he: {
@@ -141,6 +142,7 @@ export const translations = {
             'Storage and Backup': 'אחסון וגיבוי',
             'Service': 'שירות',
             'Mobile Devices': 'התקנים ניידים',
+            'Unknown': 'לא ידוע',
         },
     },
 };

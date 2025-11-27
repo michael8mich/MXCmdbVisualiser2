@@ -1,5 +1,9 @@
-import { X } from 'lucide-react';
+import { Drawer, Card, Descriptions, Tag, Typography, Divider, Space } from 'antd';
+import { CloseOutlined, SwapOutlined, ArrowDownOutlined, LinkOutlined } from '@ant-design/icons';
+import { iconMap, assetTypeColorMap } from './CustomNode';
 import { useI18n } from '../i18n/I18nContext';
+
+const { Title, Text } = Typography;
 
 interface ConnectionDrawerProps {
     isOpen: boolean;
@@ -22,149 +26,208 @@ interface ConnectionDrawerProps {
 const ConnectionDrawer = ({ isOpen, onClose, parentNode, childNode, connectionLabel }: ConnectionDrawerProps) => {
     const { t, dir } = useI18n();
 
-    if (!isOpen || !parentNode || !childNode) return null;
+    if (!parentNode || !childNode) return null;
+
+    const ParentIcon = iconMap[parentNode.type] || iconMap.default;
+    const parentColor = assetTypeColorMap[parentNode.type] || assetTypeColorMap.default;
+    const parentTranslatedType = (t as any).assetTypes?.[parentNode.type] || parentNode.type;
+
+    const ChildIcon = iconMap[childNode.type] || iconMap.default;
+    const childColor = assetTypeColorMap[childNode.type] || assetTypeColorMap.default;
+    const childTranslatedType = (t as any).assetTypes?.[childNode.type] || childNode.type;
 
     return (
-        <>
-            {/* Overlay */}
-            <div
-                onClick={onClose}
+        <Drawer
+            title={
+                <Space>
+                    <LinkOutlined style={{ color: '#1890ff' }} />
+                    <span>{t('connectionDetails')}</span>
+                </Space>
+            }
+            placement={dir === 'rtl' ? 'left' : 'right'}
+            onClose={onClose}
+            open={isOpen}
+            width={500}
+            closeIcon={<CloseOutlined />}
+            styles={{
+                body: { padding: '24px' }
+            }}
+        >
+            {/* Connection Type Card */}
+            <Card
+                bordered={false}
+                className="animated-gradient-bg animate-fade-in-up"
                 style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                    zIndex: 999,
-                    opacity: isOpen ? 1 : 0,
-                    transition: 'opacity 0.3s ease',
+                    marginBottom: 24,
+                    background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #f093fb 100%)',
+                    borderRadius: 12,
+                    animationDelay: '0.1s',
                 }}
-            />
-
-            {/* Drawer */}
-            <div
-                style={{
-                    position: 'fixed',
-                    top: 0,
-                    [dir === 'rtl' ? 'left' : 'right']: 0,
-                    bottom: 0,
-                    width: '400px',
-                    backgroundColor: 'white',
-                    boxShadow: dir === 'rtl' ? '2px 0 8px rgba(0, 0, 0, 0.15)' : '-2px 0 8px rgba(0, 0, 0, 0.15)',
-                    zIndex: 1000,
-                    transform: isOpen ? 'translateX(0)' : `translateX(${dir === 'rtl' ? '-' : ''}100%)`,
-                    transition: 'transform 0.3s ease',
-                    overflowY: 'auto',
-                    padding: '24px',
-                    direction: dir,
-                }}
+                styles={{ body: { padding: '16px 24px' } }}
             >
-                {/* Header */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-                    <h2 style={{ margin: 0, fontSize: '20px', fontWeight: 'bold' }}>{t('connectionDetails')}</h2>
-                    <button
-                        onClick={onClose}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                    <div
+                        className="pulse-icon"
                         style={{
-                            background: 'none',
-                            border: 'none',
-                            cursor: 'pointer',
-                            padding: '4px',
+                            width: 48,
+                            height: 48,
+                            borderRadius: 12,
+                            background: 'rgba(255, 255, 255, 0.2)',
+                            backdropFilter: 'blur(10px)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
+                            color: '#fff',
+                            boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                            border: '1px solid rgba(255, 255, 255, 0.18)',
+                            flexShrink: 0,
                         }}
                     >
-                        <X size={24} />
-                    </button>
-                </div>
-
-                {/* Connection Type */}
-                <div style={{ marginBottom: '32px' }}>
-                    <h3 style={{ fontSize: '14px', fontWeight: '600', color: '#6b7280', marginBottom: '8px' }}>
-                        {t('connectionType')}
-                    </h3>
-                    <div style={{
-                        padding: '12px 16px',
-                        backgroundColor: '#f3f4f6',
-                        borderRadius: '8px',
-                        fontSize: '16px',
-                        fontWeight: '600',
-                    }}>
-                        {connectionLabel}
+                        <SwapOutlined style={{ fontSize: 24 }} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                        <Text style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: 12, display: 'block', marginBottom: 2, textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>
+                            {t('connectionType')}
+                        </Text>
+                        <Title level={4} style={{ margin: 0, color: '#fff', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+                            {connectionLabel}
+                        </Title>
                     </div>
                 </div>
+            </Card>
 
-                {/* Parent Node */}
-                <div style={{ marginBottom: '24px' }}>
-                    <h3 style={{ fontSize: '14px', fontWeight: '600', color: '#6b7280', marginBottom: '12px' }}>
-                        {t('parentSource')}
-                    </h3>
-                    <div style={{
-                        padding: '16px',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '8px',
-                        backgroundColor: '#fafafa',
-                    }}>
-                        <div style={{ marginBottom: '8px' }}>
-                            <span style={{ fontSize: '12px', color: '#6b7280' }}>{t('name')}</span>
-                            <div style={{ fontSize: '16px', fontWeight: '600', marginTop: '4px' }}>{parentNode.name}</div>
+            {/* Parent Node (Source) */}
+            <Card
+                title={
+                    <Space>
+                        <Text strong style={{ fontSize: 16 }}>
+                            {t('parentSource')}
+                        </Text>
+                    </Space>
+                }
+                bordered={false}
+                className="animate-fade-in-up premium-hover-card"
+                style={{
+                    marginBottom: 16,
+                    borderRadius: 12,
+                    borderLeft: `4px solid ${parentColor}`,
+                    animationDelay: '0.2s',
+                }}
+            >
+                <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                        <div
+                            style={{
+                                width: 48,
+                                height: 48,
+                                borderRadius: 10,
+                                background: `${parentColor}15`,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: parentColor,
+                            }}
+                        >
+                            <ParentIcon size={24} />
                         </div>
-                        <div style={{ marginBottom: '8px' }}>
-                            <span style={{ fontSize: '12px', color: '#6b7280' }}>{t('type')}</span>
-                            <div style={{ fontSize: '14px', marginTop: '4px' }}>{parentNode.type}</div>
+                        <div style={{ flex: 1 }}>
+                            <Title level={5} style={{ margin: 0 }}>
+                                {parentNode.name}
+                            </Title>
+                            <Tag
+                                color={parentColor}
+                                style={{
+                                    marginTop: 4,
+                                    borderRadius: 6,
+                                    padding: '2px 10px',
+                                    fontSize: 12,
+                                }}
+                            >
+                                {parentTranslatedType}
+                            </Tag>
                         </div>
-                        <div style={{ marginBottom: '8px' }}>
-                            <span style={{ fontSize: '12px', color: '#6b7280' }}>{t('id')}</span>
-                            <div style={{ fontSize: '14px', marginTop: '4px', fontFamily: 'monospace' }}>{parentNode.id}</div>
-                        </div>
+                    </div>
+                    <Descriptions column={1} size="small">
                         {parentNode.status && (
-                            <div>
-                                <span style={{ fontSize: '12px', color: '#6b7280' }}>{t('status')}</span>
-                                <div style={{ fontSize: '14px', marginTop: '4px' }}>{parentNode.status}</div>
-                            </div>
+                            <Descriptions.Item label={<Text strong>{t('status')}</Text>}>
+                                <Tag color={parentNode.status === 'active' ? 'success' : 'default'}>
+                                    {parentNode.status}
+                                </Tag>
+                            </Descriptions.Item>
                         )}
-                    </div>
-                </div>
+                    </Descriptions>
+                </Space>
+            </Card>
 
-                {/* Arrow Indicator */}
-                <div style={{ textAlign: 'center', margin: '16px 0', fontSize: '24px', color: '#9ca3af' }}>
-                    ↓
-                </div>
-
-                {/* Child Node */}
-                <div>
-                    <h3 style={{ fontSize: '14px', fontWeight: '600', color: '#6b7280', marginBottom: '12px' }}>
-                        {t('childTarget')}
-                    </h3>
-                    <div style={{
-                        padding: '16px',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '8px',
-                        backgroundColor: '#fafafa',
-                    }}>
-                        <div style={{ marginBottom: '8px' }}>
-                            <span style={{ fontSize: '12px', color: '#6b7280' }}>{t('name')}</span>
-                            <div style={{ fontSize: '16px', fontWeight: '600', marginTop: '4px' }}>{childNode.name}</div>
-                        </div>
-                        <div style={{ marginBottom: '8px' }}>
-                            <span style={{ fontSize: '12px', color: '#6b7280' }}>{t('type')}</span>
-                            <div style={{ fontSize: '14px', marginTop: '4px' }}>{childNode.type}</div>
-                        </div>
-                        <div style={{ marginBottom: '8px' }}>
-                            <span style={{ fontSize: '12px', color: '#6b7280' }}>{t('id')}</span>
-                            <div style={{ fontSize: '14px', marginTop: '4px', fontFamily: 'monospace' }}>{childNode.id}</div>
-                        </div>
-                        {childNode.status && (
-                            <div>
-                                <span style={{ fontSize: '12px', color: '#6b7280' }}>{t('status')}</span>
-                                <div style={{ fontSize: '14px', marginTop: '4px' }}>{childNode.status}</div>
-                            </div>
-                        )}
-                    </div>
-                </div>
+            {/* Animated Connection Flow */}
+            <div className="connection-flow-container animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                <div className="connection-flow-line" />
+                <div className="connection-flow-particle" />
+                <div className="connection-flow-arrow">▼</div>
             </div>
-        </>
+
+            {/* Child Node (Target) */}
+            <Card
+                title={
+                    <Space>
+                        <Text strong style={{ fontSize: 16 }}>
+                            {t('childTarget')}
+                        </Text>
+                    </Space>
+                }
+                bordered={false}
+                className="animate-fade-in-up premium-hover-card"
+                style={{
+                    borderRadius: 12,
+                    borderLeft: `4px solid ${childColor}`,
+                    animationDelay: '0.4s',
+                }}
+            >
+                <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                        <div
+                            style={{
+                                width: 48,
+                                height: 48,
+                                borderRadius: 10,
+                                background: `${childColor}15`,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: childColor,
+                            }}
+                        >
+                            <ChildIcon size={24} />
+                        </div>
+                        <div style={{ flex: 1 }}>
+                            <Title level={5} style={{ margin: 0 }}>
+                                {childNode.name}
+                            </Title>
+                            <Tag
+                                color={childColor}
+                                style={{
+                                    marginTop: 4,
+                                    borderRadius: 6,
+                                    padding: '2px 10px',
+                                    fontSize: 12,
+                                }}
+                            >
+                                {childTranslatedType}
+                            </Tag>
+                        </div>
+                    </div>
+                    <Descriptions column={1} size="small">
+                        {childNode.status && (
+                            <Descriptions.Item label={<Text strong>{t('status')}</Text>}>
+                                <Tag color={childNode.status === 'active' ? 'success' : 'default'}>
+                                    {childNode.status}
+                                </Tag>
+                            </Descriptions.Item>
+                        )}
+                    </Descriptions>
+                </Space>
+            </Card>
+        </Drawer>
     );
 };
 

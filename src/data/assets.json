@@ -84,6 +84,11 @@
       "id": "Morgan Conn2",
       "name": "Morgan Conn2",
       "type": "Mobile Devices"
+    },
+    {
+      "id": "TestUnknownAsset",
+      "name": "Test Unknown Asset",
+      "type": "UnknownAssetType"
     }
   ],
   "connections": [
@@ -182,6 +187,12 @@
       "source": "Morgan",
       "target": "Morgan Conn2",
       "label": "connects to"
+    },
+    {
+      "id": 404417,
+      "source": "TestUnknownAsset",
+      "target": "מערכת תפנית",
+      "label": "unknown_connection_type"
     }
   ]
 }

@@ -34,6 +34,7 @@ const connectionColorMap: Record<string, string> = {
     'services': '#14b8a6', // Teal
     'Triggers': '#f97316', // Orange
     'Uses': '#a855f7', // Purple
+    'unknown': '#94a3b8', // Slate-400
     default: '#9ca3af', // Gray
 };
 
