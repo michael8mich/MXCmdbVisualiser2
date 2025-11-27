@@ -22,6 +22,8 @@ import { getLayoutedElements, type LayoutType } from '../utils/layout';
 import rawData from '../data/assets.json';
 import { useI18n } from '../i18n/I18nContext';
 
+import CustomEdge from './CustomEdge';
+
 const connectionColorMap: Record<string, string> = {
     'hosts': '#2563eb', // Blue
     'communicates with': '#10b981', // Emerald Green
@@ -40,6 +42,10 @@ const connectionColorMap: Record<string, string> = {
 
 const nodeTypes = {
     custom: CustomNode,
+};
+
+const edgeTypes = {
+    customEdge: CustomEdge,
 };
 
 const TopologyMap = () => {
@@ -178,8 +184,8 @@ const TopologyMap = () => {
                 source: conn.source,
                 target: conn.target,
                 label: conn.label,
-                type: 'smoothstep',
-                animated: true,
+                type: 'customEdge',
+                animated: false,
                 style: { stroke: color, strokeWidth: 2, cursor: 'pointer' },
                 labelStyle: { fill: color, fontWeight: 700 },
                 interactionWidth: 20,
@@ -507,6 +513,7 @@ const TopologyMap = () => {
                 onNodeContextMenu={onNodeContextMenu}
                 onEdgeClick={onEdgeClick}
                 nodeTypes={nodeTypes}
+                edgeTypes={edgeTypes}
                 connectionLineType={ConnectionLineType.SmoothStep}
                 fitView
                 attributionPosition="bottom-right"

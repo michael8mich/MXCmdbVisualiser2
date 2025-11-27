@@ -1,5 +1,5 @@
-import { Drawer, Card, Descriptions, Tag, Typography, Divider, Space } from 'antd';
-import { CloseOutlined, SwapOutlined, ArrowDownOutlined, LinkOutlined } from '@ant-design/icons';
+import { Drawer, Card, Descriptions, Tag, Typography, Space } from 'antd';
+import { CloseOutlined, SwapOutlined, LinkOutlined } from '@ant-design/icons';
 import { iconMap, assetTypeColorMap } from './CustomNode';
 import { useI18n } from '../i18n/I18nContext';
 
