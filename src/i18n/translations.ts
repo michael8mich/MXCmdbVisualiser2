@@ -10,8 +10,11 @@ export const translations = {
 
         // Layouts
         treeLayout: 'Tree Layout',
+        horizontalTreeLayout: 'Horizontal Tree',
         circleLayout: 'Circle Layout',
         starLayout: 'Star Layout',
+        gridLayout: 'Grid Layout',
+        concentricLayout: 'Concentric Layout',
 
         // Controls
         expandAll: 'Expand All',
@@ -82,9 +85,12 @@ export const translations = {
         back: 'חזור',
 
         // Layouts
-        treeLayout: 'תצוגת עץ',
-        circleLayout: 'תצוגת מעגל',
-        starLayout: 'תצוגת כוכב',
+        treeLayout: 'פריסת עץ',
+        horizontalTreeLayout: 'עץ אופקי',
+        circleLayout: 'פריסה מעגלית',
+        starLayout: 'פריסת כוכב',
+        gridLayout: 'פריסת רשת',
+        concentricLayout: 'פריסה קונצנטרית',
 
         // Controls
         expandAll: 'הרחב הכל',

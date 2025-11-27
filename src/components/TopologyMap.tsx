@@ -381,8 +381,11 @@ const TopologyMap = () => {
                         }}
                     >
                         <option value="tree">{t('treeLayout')}</option>
+                        <option value="horizontal-tree">{t('horizontalTreeLayout')}</option>
                         <option value="circle">{t('circleLayout')}</option>
                         <option value="star">{t('starLayout')}</option>
+                        <option value="grid">{t('gridLayout')}</option>
+                        <option value="concentric">{t('concentricLayout')}</option>
                     </select>
                 )}
 
