@@ -70,6 +70,7 @@ const TopologyMap = () => {
     const [legendExpanded, setLegendExpanded] = useState(false);
     const [assetTypesExpanded, setAssetTypesExpanded] = useState(false);
     const [rfInstance, setRfInstance] = useState<any>(null);
+    const centeredSystemIdRef = useState<{ current: string | null }>({ current: null })[0]; // Mock useRef since I can't import it easily without changing imports
 
     // Fit view when drawer closes to ensure map is visible
     useEffect(() => {
@@ -83,6 +84,29 @@ const TopologyMap = () => {
     }, [drawerOpen, assetDrawerOpen, rfInstance]);
 
     const selectedSystemId = searchParams.get('system');
+
+    // Center selected node on load/change
+    useEffect(() => {
+        if (rfInstance && selectedSystemId && nodes.length > 0) {
+            // Check if we already centered for this system ID to avoid snapping while user pans
+            if (centeredSystemIdRef.current !== selectedSystemId) {
+                const selectedNode = nodes.find(n => n.id === selectedSystemId);
+                if (selectedNode) {
+                    setTimeout(() => {
+                        // Calculate center (approximate node center)
+                        // Note: setCenter takes the x,y coordinates that should be in the CENTER of the viewport
+                        const nodeWidth = 220;
+                        const nodeHeight = 60;
+                        const x = selectedNode.position.x + nodeWidth / 2;
+                        const y = selectedNode.position.y + nodeHeight / 2;
+
+                        rfInstance.setCenter(x, y, { zoom: 1.0, duration: 800 });
+                        centeredSystemIdRef.current = selectedSystemId;
+                    }, 100);
+                }
+            }
+        }
+    }, [rfInstance, selectedSystemId, nodes, centeredSystemIdRef]);
 
     // Pre-calculate child counts for all nodes
     const childCounts = new Map<string, number>();
