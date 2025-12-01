@@ -9,6 +9,7 @@ import ReactFlow, {
     type Node,
     type Edge,
     MarkerType,
+    BackgroundVariant,
 } from 'reactflow';
 import { useSearchParams } from 'react-router-dom';
 import { Maximize2, Minimize2 } from 'lucide-react';
@@ -21,6 +22,7 @@ import SearchableSelect from './SearchableSelect';
 import { getLayoutedElements, type LayoutType } from '../utils/layout';
 import rawData from '../data/assets.json';
 import { useI18n } from '../i18n/I18nContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 import CustomEdge from './CustomEdge';
 
@@ -51,6 +53,7 @@ const edgeTypes = {
 const TopologyMap = () => {
     console.log('TopologyMap rendering...');
     const { t, language, setLanguage, dir } = useI18n();
+    const { theme } = useTheme();
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -66,6 +69,18 @@ const TopologyMap = () => {
     const [selectedAsset, setSelectedAsset] = useState<any>(null);
     const [legendExpanded, setLegendExpanded] = useState(false);
     const [assetTypesExpanded, setAssetTypesExpanded] = useState(false);
+    const [rfInstance, setRfInstance] = useState<any>(null);
+
+    // Fit view when drawer closes to ensure map is visible
+    useEffect(() => {
+        if (!drawerOpen && !assetDrawerOpen && rfInstance) {
+            // Wait for drawer animation to complete (usually 300-400ms)
+            setTimeout(() => {
+                console.log('Fitting view after drawer close...');
+                rfInstance.fitView({ padding: 0.2, duration: 800 });
+            }, 500);
+        }
+    }, [drawerOpen, assetDrawerOpen, rfInstance]);
 
     const selectedSystemId = searchParams.get('system');
 
@@ -316,7 +331,7 @@ const TopologyMap = () => {
         setExpandedNodeIds(new Set());
     };
 
-    const [rfInstance, setRfInstance] = useState<any>(null);
+
 
     // Auto-fit view when system or layout changes
     useEffect(() => {
@@ -345,11 +360,12 @@ const TopologyMap = () => {
                         onClick={goBack}
                         style={{
                             padding: '8px 16px',
-                            background: 'white',
-                            border: '1px solid #ccc',
+                            background: 'var(--node-bg)',
+                            border: '1px solid var(--border-color)',
                             borderRadius: 4,
                             cursor: 'pointer',
-                            fontWeight: 'bold'
+                            fontWeight: 'bold',
+                            color: 'var(--text-primary)'
                         }}
                     >
                         {dir === 'rtl' ? 'חזור ←' : '← ' + t('back')}
@@ -421,11 +437,11 @@ const TopologyMap = () => {
             }}>
                 {/* Combined Legend Panel */}
                 <div style={{
-                    background: 'white',
+                    background: 'var(--node-bg)',
                     padding: '12px',
                     borderRadius: '8px',
-                    border: '1px solid #ccc',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                    border: '1px solid var(--border-color)',
+                    boxShadow: 'var(--shadow-md)',
                     maxWidth: '280px',
                     maxHeight: '500px',
                     overflowY: 'auto'
@@ -444,7 +460,7 @@ const TopologyMap = () => {
                                 alignItems: 'center',
                                 gap: '6px',
                                 flexDirection: dir === 'rtl' ? 'row-reverse' : 'row',
-                                color: '#1f2937'
+                                color: 'var(--text-primary)'
                             }}
                         >
                             <span>{assetTypesExpanded ? '▼' : '▶'}</span>
@@ -469,7 +485,7 @@ const TopologyMap = () => {
                                                 }}>
                                                     <Icon size={16} />
                                                 </div>
-                                                <span style={{ color: '#374151' }}>{label}</span>
+                                                <span style={{ color: 'var(--text-primary)' }}>{label}</span>
                                             </div>
                                         );
                                     })}
@@ -498,7 +514,7 @@ const TopologyMap = () => {
                                 alignItems: 'center',
                                 gap: '6px',
                                 flexDirection: dir === 'rtl' ? 'row-reverse' : 'row',
-                                color: '#1f2937'
+                                color: 'var(--text-primary)'
                             }}
                         >
                             <span>{legendExpanded ? '▼' : '▶'}</span>
@@ -515,7 +531,7 @@ const TopologyMap = () => {
                                             borderRadius: '2px',
                                             flexShrink: 0
                                         }}></div>
-                                        <span style={{ color: '#374151' }}>{label}</span>
+                                        <span style={{ color: 'var(--text-primary)' }}>{label}</span>
                                     </div>
                                 ))}
                             </div>
@@ -539,7 +555,12 @@ const TopologyMap = () => {
                 fitView
                 attributionPosition="bottom-right"
             >
-                <Background color="#e5e7eb" gap={16} />
+                <Background
+                    variant={BackgroundVariant.Dots}
+                    color={theme === 'dark' ? '#404040' : '#e5e7eb'}
+                    gap={16}
+                    style={{ backgroundColor: 'transparent' }}
+                />
                 <Controls
                     position={dir === 'rtl' ? 'bottom-right' : 'bottom-left'}
                     style={{

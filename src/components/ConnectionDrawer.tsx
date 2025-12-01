@@ -49,8 +49,11 @@ const ConnectionDrawer = ({ isOpen, onClose, parentNode, childNode, connectionLa
             open={isOpen}
             width={500}
             closeIcon={<CloseOutlined />}
+            mask={false}
+            getContainer={false}
             styles={{
-                body: { padding: '24px' }
+                body: { padding: '24px' },
+                wrapper: { boxShadow: 'none' }
             }}
         >
             {/* Connection Type Card */}

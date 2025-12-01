@@ -73,8 +73,8 @@ const SearchableSelect = ({ systems, databases, servers, selectedId, onSelect }:
                     padding: '6px 12px',
                     fontSize: '11px',
                     fontWeight: 'bold',
-                    color: '#6b7280',
-                    backgroundColor: '#f3f4f6',
+                    color: 'var(--text-secondary)',
+                    backgroundColor: 'var(--bg-color)',
                     textTransform: 'uppercase',
                     letterSpacing: '0.5px'
                 }}>
@@ -87,18 +87,19 @@ const SearchableSelect = ({ systems, databases, servers, selectedId, onSelect }:
                         style={{
                             padding: '8px 12px',
                             cursor: 'pointer',
-                            backgroundColor: asset.id === selectedId ? '#e0e7ff' : 'white',
-                            borderLeft: asset.id === selectedId ? '3px solid #4f46e5' : '3px solid transparent',
+                            backgroundColor: asset.id === selectedId ? 'var(--accent-color)' : 'var(--node-bg)',
+                            borderLeft: asset.id === selectedId ? '3px solid var(--accent-color)' : '3px solid transparent',
                             transition: 'all 0.15s',
+                            color: asset.id === selectedId ? 'white' : 'var(--text-primary)'
                         }}
                         onMouseEnter={(e) => {
                             if (asset.id !== selectedId) {
-                                e.currentTarget.style.backgroundColor = '#f9fafb';
+                                e.currentTarget.style.backgroundColor = 'var(--bg-color)';
                             }
                         }}
                         onMouseLeave={(e) => {
                             if (asset.id !== selectedId) {
-                                e.currentTarget.style.backgroundColor = 'white';
+                                e.currentTarget.style.backgroundColor = 'var(--node-bg)';
                             }
                         }}
                     >
@@ -117,8 +118,8 @@ const SearchableSelect = ({ systems, databases, servers, selectedId, onSelect }:
                 style={{
                     padding: '8px 32px 8px 12px',
                     borderRadius: 4,
-                    border: '1px solid #ccc',
-                    backgroundColor: 'white',
+                    border: '1px solid var(--border-color)',
+                    backgroundColor: 'var(--node-bg)',
                     cursor: 'pointer',
                     userSelect: 'none',
                     position: 'relative',
@@ -131,7 +132,7 @@ const SearchableSelect = ({ systems, databases, servers, selectedId, onSelect }:
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap',
-                    color: selectedAsset ? '#000' : '#9ca3af'
+                    color: selectedAsset ? 'var(--text-primary)' : 'var(--text-secondary)'
                 }}>
                     {displayText}
                 </span>
@@ -139,7 +140,7 @@ const SearchableSelect = ({ systems, databases, servers, selectedId, onSelect }:
                     position: 'absolute',
                     right: '8px',
                     fontSize: '12px',
-                    color: '#6b7280',
+                    color: 'var(--text-secondary)',
                     transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                     transition: 'transform 0.2s'
                 }}>
@@ -155,10 +156,10 @@ const SearchableSelect = ({ systems, databases, servers, selectedId, onSelect }:
                     left: 0,
                     right: 0,
                     marginTop: '4px',
-                    backgroundColor: 'white',
-                    border: '1px solid #ccc',
+                    backgroundColor: 'var(--node-bg)',
+                    border: '1px solid var(--border-color)',
                     borderRadius: 4,
-                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                    boxShadow: 'var(--shadow-md)',
                     maxHeight: '400px',
                     overflow: 'hidden',
                     zIndex: 1000,
@@ -168,10 +169,10 @@ const SearchableSelect = ({ systems, databases, servers, selectedId, onSelect }:
                     {/* Search Input */}
                     <div style={{
                         padding: '8px',
-                        borderBottom: '1px solid #e5e7eb',
+                        borderBottom: '1px solid var(--border-color)',
                         position: 'sticky',
                         top: 0,
-                        backgroundColor: 'white',
+                        backgroundColor: 'var(--node-bg)',
                         zIndex: 1
                     }}>
                         <input
@@ -183,14 +184,16 @@ const SearchableSelect = ({ systems, databases, servers, selectedId, onSelect }:
                             style={{
                                 width: '100%',
                                 padding: '6px 10px',
-                                border: '1px solid #d1d5db',
+                                border: '1px solid var(--border-color)',
                                 borderRadius: 4,
                                 fontSize: '14px',
                                 outline: 'none',
-                                direction: dir
+                                direction: dir,
+                                backgroundColor: 'var(--node-bg)',
+                                color: 'var(--text-primary)'
                             }}
-                            onFocus={(e) => e.currentTarget.style.borderColor = '#4f46e5'}
-                            onBlur={(e) => e.currentTarget.style.borderColor = '#d1d5db'}
+                            onFocus={(e) => e.currentTarget.style.borderColor = 'var(--accent-color)'}
+                            onBlur={(e) => e.currentTarget.style.borderColor = 'var(--border-color)'}
                         />
                     </div>
 
@@ -203,7 +206,7 @@ const SearchableSelect = ({ systems, databases, servers, selectedId, onSelect }:
                             <div style={{
                                 padding: '20px',
                                 textAlign: 'center',
-                                color: '#9ca3af'
+                                color: 'var(--text-secondary)'
                             }}>
                                 {dir === 'rtl' ? 'לא נמצאו תוצאות' : 'No results found'}
                             </div>

@@ -47,8 +47,11 @@ const AssetDrawer = ({ isOpen, onClose, asset, incomingConnections, outgoingConn
             open={isOpen}
             width={500}
             closeIcon={<CloseOutlined />}
+            mask={false}
+            getContainer={false}
             styles={{
-                body: { padding: '24px' }
+                body: { padding: '24px' },
+                wrapper: { boxShadow: 'none' }
             }}
         >
             {/* Asset Header Card with Gradient */}

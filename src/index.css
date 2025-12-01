@@ -1,4 +1,6 @@
-:root {
+/* Light Theme (Default) */
+:root,
+[data-theme="light"] {
   --bg-color: #f8f9fa;
   --node-bg: #ffffff;
   --text-primary: #1a1a1a;
@@ -9,6 +11,75 @@
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --edge-color: #9ca3af;
+  --edge-hover-color: #374151;
+  --react-flow-bg: #f8f9fa;
+  --react-flow-dot: #e5e7eb;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --bg-color: #1a1a1a;
+  /* DEBUG: Dark Blue instead of Black */
+  --node-bg: #2d2d2d;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --accent-color: #60a5fa;
+  --error-color: #f87171;
+  --border-color: #374151;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --edge-color: #4b5563;
+  --edge-hover-color: #93c5fd;
+  --react-flow-bg: transparent;
+  /* Force transparent in dark mode */
+  --react-flow-dot: #404040;
+}
+
+.react-flow {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1;
+}
+
+/* React Flow Internal Layers Fix */
+.react-flow__pane,
+.react-flow__viewport,
+.react-flow__renderer,
+.react-flow__container,
+.react-flow__background {
+  background: transparent !important;
+}
+
+/* Fix potential drawer shadow issues */
+.ant-drawer-content-wrapper {
+  box-shadow: -6px 0 16px -8px rgba(0, 0, 0, 0.08), -9px 0 28px 0 rgba(0, 0, 0, 0.05), -12px 0 48px 16px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Local Drawer Fixes */
+.topology-container .ant-drawer {
+  position: absolute;
+  pointer-events: none;
+  /* Let clicks pass through the empty area */
+}
+
+.topology-container .ant-drawer-content-wrapper {
+  pointer-events: auto;
+  /* Re-enable clicks on the drawer itself */
+}
+
+.topology-container .ant-drawer-mask {
+  display: none;
+  /* Ensure mask is gone */
+}
+
+/* Ensure the main container has the background */
+.topology-container {
+  background-color: var(--bg-color);
 }
 
 body {
@@ -17,12 +88,19 @@ body {
   background-color: var(--bg-color);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .topology-container {
   width: 100vw;
   height: 100vh;
   background-color: var(--bg-color);
+  transition: background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transform: translateZ(0);
+  /* Force hardware acceleration */
 }
 
 /* React Flow Customization */
@@ -31,7 +109,7 @@ body {
 }
 
 .react-flow__edge-path {
-  stroke: #9ca3af;
+  stroke: var(--edge-color);
   stroke-width: 4;
   transition: stroke-width 0.2s ease, stroke 0.2s ease;
   cursor: pointer;
@@ -51,7 +129,7 @@ body {
 .react-flow__edge:hover .react-flow__edge-path,
 .react-flow__edge:hover path {
   stroke-width: 8 !important;
-  stroke: #374151 !important;
+  stroke: var(--edge-hover-color) !important;
 }
 
 .react-flow__edge:hover .react-flow__edge-text {
@@ -65,6 +143,38 @@ body {
   stroke: transparent;
 }
 
+/* React Flow pane background */
+.react-flow {
+  background-color: var(--react-flow-bg);
+}
+
+/* Theme-aware form elements */
+button,
+select,
+input {
+  background-color: var(--node-bg);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+button:hover,
+select:hover,
+input:hover {
+  background-color: var(--bg-color);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Ensure select dropdowns work in dark mode */
+select option {
+  background-color: var(--node-bg);
+  color: var(--text-primary);
+}
+
 .react-flow__controls {
   box-shadow: var(--shadow-md);
   border-radius: 8px;
@@ -74,7 +184,12 @@ body {
 
 .react-flow__controls-button {
   border-bottom: 1px solid var(--border-color);
-  background: white;
+  background: var(--node-bg);
+  color: var(--text-primary);
+}
+
+.react-flow__controls-button:hover {
+  background: var(--bg-color);
 }
 
 .react-flow__controls-button:last-child {
@@ -436,4 +551,98 @@ body {
   animation: fadeIn 0.5s ease-out forwards;
   opacity: 0;
   /* Start invisible */
+}
+
+/* ===== Ant Design Dark Mode Overrides ===== */
+[data-theme="dark"] .ant-drawer {
+  background-color: transparent;
+  /* Fix: Container must be transparent */
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .ant-drawer-content {
+  background-color: var(--node-bg);
+}
+
+[data-theme="dark"] .ant-drawer-header {
+  background-color: var(--node-bg);
+  border-bottom-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .ant-drawer-title {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .ant-drawer-body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .ant-drawer-close {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .ant-card {
+  background-color: var(--node-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .ant-card-head {
+  background-color: var(--node-bg);
+  border-bottom-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .ant-card-head-title {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .ant-card-body {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .ant-typography {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .ant-typography-secondary {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .ant-descriptions-item-label {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .ant-descriptions-item-content {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .ant-space-item {
+  color: var(--text-primary);
+}
+
+/* Ensure all text elements in drawers are visible */
+[data-theme="dark"] .ant-drawer .ant-typography,
+[data-theme="dark"] .ant-drawer span,
+[data-theme="dark"] .ant-drawer div {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .ant-card .ant-typography,
+[data-theme="dark"] .ant-card span:not(.anticon),
+[data-theme="dark"] .ant-card div {
+  color: var(--text-primary);
+}
+
+/* Override inline styles for strong/bold text */
+[data-theme="dark"] .ant-typography strong,
+[data-theme="dark"] strong {
+  color: var(--text-primary);
+}
+
+/* Fix tag backgrounds in dark mode */
+[data-theme="dark"] .ant-tag {
+  border-color: var(--border-color);
 }
