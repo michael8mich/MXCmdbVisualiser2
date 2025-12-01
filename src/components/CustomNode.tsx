@@ -105,8 +105,16 @@ export const assetTypeColorMap: Record<string, string> = {
     default: '#64748b', // Slate gray
 };
 
+// Helper to convert hex to rgba with opacity
+const hexToRgba = (hex: string, alpha: number) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
 const CustomNode = ({ data }: NodeProps) => {
-    const { t, language } = useI18n();
+    const { t } = useI18n();
     const Icon = iconMap[data.type] || iconMap.default;
     const iconColor = assetTypeColorMap[data.type] || assetTypeColorMap.default;
     const isError = data.status === 'error';
@@ -119,10 +127,19 @@ const CustomNode = ({ data }: NodeProps) => {
     const translatedType = (t as any).assetTypes?.[data.type] || data.type;
     const animationDelay = data.animationDelay || '0s';
 
+    // Dynamic styles using CSS variables
+    const dynamicStyle = isSelected ? { animationDelay } : {
+        '--node-color': iconColor,
+        '--node-bg-start': hexToRgba(iconColor, 0.05),
+        '--node-bg-end': hexToRgba(iconColor, 0.15),
+        '--node-shadow': hexToRgba(iconColor, 0.2),
+        animationDelay
+    } as React.CSSProperties;
+
     return (
         <div
             className={`custom-node ${isError ? 'error' : ''} ${isSystem ? 'system-node' : ''} ${isSelected ? 'selected-system' : ''} animate-scale-in`}
-            style={{ animationDelay }}
+            style={dynamicStyle}
         >
             <Handle type="target" position={Position.Top} className="handle" />
 

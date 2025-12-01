@@ -205,19 +205,21 @@ select option {
 /* Custom Node Styles */
 .custom-node {
   background: var(--node-bg);
+  background: linear-gradient(135deg, var(--node-bg-start, var(--node-bg)) 0%, var(--node-bg-end, var(--node-bg)) 100%);
+  border: 1px solid var(--node-color, var(--border-color));
   border-radius: 12px;
-  border: 1px solid var(--border-color);
   padding: 12px;
-  min-width: 220px;
-  box-shadow: var(--shadow-md);
+  min-width: 180px;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
 }
 
 .custom-node:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--accent-color);
+  box-shadow: 0 4px 12px var(--node-shadow, rgba(0, 0, 0, 0.1));
+  border-color: var(--node-color, var(--accent-color));
 }
 
 .custom-node.selected {
@@ -229,51 +231,42 @@ select option {
   border-color: var(--error-color);
 }
 
-/* System Node - Bigger and More Prominent */
+/* System Node - Inherit standard styling but keep size if needed */
 .custom-node.system-node {
-  min-width: 280px;
-  padding: 16px;
-  border: 3px solid #3b82f6;
-  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-.custom-node.system-node:hover {
-  border-color: #2563eb;
-  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
-}
-
-.custom-node.system-node .system-icon {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-}
-
-.custom-node.system-node .system-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: #1e40af;
+  min-width: 220px;
+  /* Slightly larger than standard */
+  border-width: 3px;
+  /* Bold border for unselected systems */
 }
 
 /* Selected System Node - Extra Prominent */
 .custom-node.selected-system {
-  border: 1px solid var(--border-color);
-  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-  box-shadow: var(--shadow-md);
-  transform: none;
+  border: 4px solid #f97316 !important;
+  /* Orange and Bold */
+  background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%);
+  /* Light orange bg */
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.2);
+  /* Orange glow */
+  transform: scale(1.05);
+  z-index: 10;
 }
 
 .custom-node.selected-system:hover {
-  border-color: var(--accent-color);
-  box-shadow: var(--shadow-lg);
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 0 0 6px rgba(249, 115, 22, 0.3);
 }
 
 .custom-node.selected-system .system-icon {
   background: transparent;
+  color: #c2410c !important;
+  /* Force Orange Icon */
 }
 
 .custom-node.selected-system .system-title {
   font-size: 18px;
   font-weight: 800;
-  color: #1e3a8a;
+  color: #c2410c !important;
+  /* Dark Orange */
 }
 
 .node-content {
