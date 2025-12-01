@@ -180,16 +180,22 @@ select option {
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid var(--border-color);
+  background: var(--node-bg) !important;
 }
 
 .react-flow__controls-button {
   border-bottom: 1px solid var(--border-color);
-  background: var(--node-bg);
-  color: var(--text-primary);
+  background: var(--node-bg) !important;
+  color: var(--text-primary) !important;
 }
 
 .react-flow__controls-button:hover {
-  background: var(--bg-color);
+  background: var(--bg-color) !important;
+}
+
+.react-flow__controls-button svg {
+  stroke: currentColor !important;
+  fill: none !important;
 }
 
 .react-flow__controls-button:last-child {
