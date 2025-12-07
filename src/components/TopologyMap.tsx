@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import ReactFlow, {
     Background,
     Controls,
@@ -70,7 +70,8 @@ const TopologyMap = () => {
     const [legendExpanded, setLegendExpanded] = useState(false);
     const [assetTypesExpanded, setAssetTypesExpanded] = useState(false);
     const [rfInstance, setRfInstance] = useState<any>(null);
-    const centeredSystemIdRef = useState<{ current: string | null }>({ current: null })[0]; // Mock useRef since I can't import it easily without changing imports
+    const centeredSystemIdRef = useRef<string | null>(null);
+    const lastClickedNodeRef = useRef<{ id: string; x: number; y: number } | null>(null);
 
     // Fit view when drawer closes to ensure map is visible
     useEffect(() => {
@@ -88,13 +89,13 @@ const TopologyMap = () => {
     // Center selected node on load/change
     useEffect(() => {
         if (rfInstance && selectedSystemId && nodes.length > 0) {
-            // Check if we already centered for this system ID to avoid snapping while user pans
+            // Only center if we haven't centered this system yet
             if (centeredSystemIdRef.current !== selectedSystemId) {
                 const selectedNode = nodes.find(n => n.id === selectedSystemId);
                 if (selectedNode) {
+                    // Wait for layout to stabilize
                     setTimeout(() => {
                         // Calculate center (approximate node center)
-                        // Note: setCenter takes the x,y coordinates that should be in the CENTER of the viewport
                         const nodeWidth = 220;
                         const nodeHeight = 60;
                         const x = selectedNode.position.x + nodeWidth / 2;
@@ -106,7 +107,7 @@ const TopologyMap = () => {
                 }
             }
         }
-    }, [rfInstance, selectedSystemId, nodes, centeredSystemIdRef]);
+    }, [rfInstance, selectedSystemId, nodes]);
 
     // Pre-calculate child counts for all nodes
     const childCounts = new Map<string, number>();
@@ -245,14 +246,45 @@ const TopologyMap = () => {
                 initialEdges,
                 layoutType
             );
+
+            // Check if we need to restore a node's position
+            if (lastClickedNodeRef.current && rfInstance) {
+                const anchor = lastClickedNodeRef.current;
+                const newNode = layoutedNodes.find(n => n.id === anchor.id);
+
+                if (newNode) {
+                    const currentViewport = rfInstance.getViewport();
+                    const zoom = currentViewport.zoom;
+
+                    // Calculate the difference in node position
+                    const deltaX = newNode.position.x - anchor.x;
+                    const deltaY = newNode.position.y - anchor.y;
+
+                    // We need to shift the viewport by the opposite amount to keep the node stationary on screen
+                    const newViewportX = currentViewport.x - (deltaX * zoom);
+                    const newViewportY = currentViewport.y - (deltaY * zoom);
+
+                    rfInstance.setViewport({ x: newViewportX, y: newViewportY, zoom: zoom });
+                }
+                // Reset the ref so we don't keep adjusting
+                lastClickedNodeRef.current = null;
+            }
+
             setNodes(layoutedNodes);
             setEdges(layoutedEdges);
         } catch (error) {
             console.error('Layout failed:', error);
         }
-    }, [selectedSystemId, expandedNodeIds, layoutType, getVisibleElements, getDirectConnections, setNodes, setEdges]);
+    }, [selectedSystemId, expandedNodeIds, layoutType, getVisibleElements, getDirectConnections, setNodes, setEdges, rfInstance]);
 
-    const onNodeClick = useCallback((_event: React.MouseEvent, node: Node) => {
+    const onNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
+        // Store the clicked node's ID and current position before expansion triggers a re-layout
+        lastClickedNodeRef.current = {
+            id: node.id,
+            x: node.position.x,
+            y: node.position.y
+        };
+
         // Left click - toggle expansion
         setExpandedNodeIds(prev => {
             const newSet = new Set(prev);
