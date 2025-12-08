@@ -10,6 +10,8 @@ import ReactFlow, {
     type Edge,
     MarkerType,
     BackgroundVariant,
+    type Connection,
+
 } from 'reactflow';
 import { useSearchParams } from 'react-router-dom';
 import { Maximize2, Minimize2 } from 'lucide-react';
@@ -19,6 +21,7 @@ import CustomNode, { assetTypeColorMap, iconMap } from './CustomNode';
 import ConnectionDrawer from './ConnectionDrawer';
 import AssetDrawer from './AssetDrawer';
 import SearchableSelect from './SearchableSelect';
+import AssetSelectionModal from './AssetSelectionModal';
 import { getLayoutedElements, type LayoutType } from '../utils/layout';
 import rawData from '../data/assets.json';
 import { useI18n } from '../i18n/I18nContext';
@@ -54,6 +57,7 @@ const TopologyMap = () => {
     console.log('TopologyMap rendering...');
     const { t, language, setLanguage, dir } = useI18n();
     const { theme } = useTheme();
+    const [localData, setLocalData] = useState(rawData);
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -70,6 +74,8 @@ const TopologyMap = () => {
     const [legendExpanded, setLegendExpanded] = useState(false);
     const [assetTypesExpanded, setAssetTypesExpanded] = useState(false);
     const [rfInstance, setRfInstance] = useState<any>(null);
+    const [addConnectionModalOpen, setAddConnectionModalOpen] = useState(false);
+    const [addConnectionDirection, setAddConnectionDirection] = useState<'incoming' | 'outgoing'>('outgoing');
     const centeredSystemIdRef = useRef<string | null>(null);
     const lastClickedNodeRef = useRef<{ id: string; x: number; y: number } | null>(null);
 
@@ -111,7 +117,7 @@ const TopologyMap = () => {
 
     // Pre-calculate child counts for all nodes
     const childCounts = new Map<string, number>();
-    rawData.connections.forEach(conn => {
+    localData.connections.forEach(conn => {
         const current = childCounts.get(conn.source) || 0;
         childCounts.set(conn.source, current + 1);
     });
@@ -122,7 +128,7 @@ const TopologyMap = () => {
         const visibleEdgeIds = new Set<string>();
 
         // Get all connections where this asset is either source or target
-        rawData.connections.forEach((conn, index) => {
+        localData.connections.forEach((conn, index) => {
             if (conn.source === assetId || conn.target === assetId) {
                 visibleNodeIds.add(conn.source);
                 visibleNodeIds.add(conn.target);
@@ -130,8 +136,8 @@ const TopologyMap = () => {
             }
         });
 
-        const subNodes = rawData.assets.filter(a => visibleNodeIds.has(a.id));
-        const subEdges = rawData.connections
+        const subNodes = localData.assets.filter(a => visibleNodeIds.has(a.id));
+        const subEdges = localData.connections
             .map((c, i) => ({ ...c, id: `e${i}` }))
             .filter(c => visibleEdgeIds.has(c.id));
 
@@ -148,7 +154,7 @@ const TopologyMap = () => {
             const currentId = queue.shift()!;
 
             if (currentId === rootId || expandedIds.has(currentId)) {
-                rawData.connections.forEach((conn, index) => {
+                localData.connections.forEach((conn, index) => {
                     // Show outgoing connections (where current is source)
                     if (conn.source === currentId) {
                         if (!visibleNodeIds.has(conn.target)) {
@@ -169,8 +175,8 @@ const TopologyMap = () => {
             }
         }
 
-        const subNodes = rawData.assets.filter(a => visibleNodeIds.has(a.id));
-        const subEdges = rawData.connections
+        const subNodes = localData.assets.filter(a => visibleNodeIds.has(a.id));
+        const subEdges = localData.connections
             .map((c, i) => ({ ...c, id: `e${i}` }))
             .filter(c => visibleEdgeIds.has(c.id));
 
@@ -179,7 +185,7 @@ const TopologyMap = () => {
 
     // Load data based on URL and expansion state
     useEffect(() => {
-        let targetNodes: typeof rawData.assets = [];
+        let targetNodes: typeof localData.assets = [];
         let targetEdges: { source: string; target: string; label: string; id: string }[] = [];
 
         if (!selectedSystemId) {
@@ -187,7 +193,7 @@ const TopologyMap = () => {
             targetEdges = [];
         } else {
             // Determine the asset type
-            const selectedAsset = rawData.assets.find(a => a.id === selectedSystemId);
+            const selectedAsset = localData.assets.find(a => a.id === selectedSystemId);
             const assetType = selectedAsset?.type;
 
             // Use different logic based on asset type
@@ -275,7 +281,54 @@ const TopologyMap = () => {
         } catch (error) {
             console.error('Layout failed:', error);
         }
-    }, [selectedSystemId, expandedNodeIds, layoutType, getVisibleElements, getDirectConnections, setNodes, setEdges, rfInstance]);
+    }, [selectedSystemId, expandedNodeIds, layoutType, getVisibleElements, getDirectConnections, setNodes, setEdges, rfInstance, localData]);
+
+    const onConnect = useCallback((params: Connection) => {
+        if (!params.source || !params.target) return;
+
+        // Prevent self-connections
+        if (params.source === params.target) return;
+
+        // Add to localData
+        setLocalData(prev => {
+            // Check if connection already exists
+            const exists = prev.connections.some(c =>
+                (c.source === params.source && c.target === params.target)
+            );
+
+            if (exists) return prev;
+
+            const newId = prev.connections.length > 0
+                ? Math.max(...prev.connections.map(c => typeof c.id === 'string' ? parseInt(c.id) : c.id)) + 1
+                : 1;
+
+            const newConnection = {
+                id: newId,
+                source: params.source!,
+                target: params.target!,
+                label: 'connects to', // Default label
+            };
+
+            return {
+                ...prev,
+                connections: [...prev.connections, newConnection]
+            };
+        });
+    }, []);
+
+    const removeConnection = useCallback(() => {
+        if (!selectedEdge) return;
+
+        setLocalData(prev => ({
+            ...prev,
+            connections: prev.connections.filter(c =>
+                !(c.source === selectedEdge.parentNode.id && c.target === selectedEdge.childNode.id)
+            )
+        }));
+
+        setDrawerOpen(false);
+        setSelectedEdge(null);
+    }, [selectedEdge]);
 
     const onNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
         // Store the clicked node's ID and current position before expansion triggers a re-layout
@@ -297,51 +350,105 @@ const TopologyMap = () => {
         });
     }, []);
 
-    const onNodeContextMenu = useCallback((event: React.MouseEvent, node: Node) => {
-        event.preventDefault(); // Prevent default context menu
+    const getAssetData = useCallback((assetId: string, currentData: typeof localData) => {
+        const asset = currentData.assets.find(a => a.id === assetId);
+        if (!asset) return null;
 
-        // Find the asset
-        const asset = rawData.assets.find(a => a.id === node.id);
-        if (!asset) return;
-
-        // Find incoming connections (where this node is the target)
-        const incoming = rawData.connections
-            .filter(conn => conn.target === node.id)
+        const incoming = currentData.connections
+            .filter(conn => conn.target === assetId)
             .map(conn => {
-                const sourceAsset = rawData.assets.find(a => a.id === conn.source);
+                const sourceAsset = currentData.assets.find(a => a.id === conn.source);
                 return {
                     id: conn.source,
                     name: sourceAsset?.name || 'Unknown',
                     type: sourceAsset?.type || 'Unknown',
                     label: conn.label,
+                    connectionId: conn.id // Add connection ID for reference if needed
                 };
             });
 
-        // Find outgoing connections (where this node is the source)
-        const outgoing = rawData.connections
-            .filter(conn => conn.source === node.id)
+        const outgoing = currentData.connections
+            .filter(conn => conn.source === assetId)
             .map(conn => {
-                const targetAsset = rawData.assets.find(a => a.id === conn.target);
+                const targetAsset = currentData.assets.find(a => a.id === conn.target);
                 return {
                     id: conn.target,
                     name: targetAsset?.name || 'Unknown',
                     type: targetAsset?.type || 'Unknown',
                     label: conn.label,
+                    connectionId: conn.id
                 };
             });
 
-        setSelectedAsset({
-            asset,
-            incomingConnections: incoming,
-            outgoingConnections: outgoing,
-        });
-        setAssetDrawerOpen(true);
+        return { asset, incomingConnections: incoming, outgoingConnections: outgoing };
     }, []);
+
+    const onNodeContextMenu = useCallback((event: React.MouseEvent, node: Node) => {
+        event.preventDefault();
+        const assetData = getAssetData(node.id, localData);
+        if (assetData) {
+            setSelectedAsset(assetData);
+            setAssetDrawerOpen(true);
+        }
+    }, [localData, getAssetData]);
+
+    const handleDeleteConnectionFromDrawer = useCallback((connectedAssetId: string, direction: 'incoming' | 'outgoing') => {
+        if (!selectedAsset?.asset) return;
+
+        setLocalData(prev => {
+            const currentAssetId = selectedAsset.asset.id;
+            const newConnections = prev.connections.filter(c => {
+                if (direction === 'outgoing') {
+                    // Remove connection where source is current asset AND target is connected asset
+                    return !(c.source === currentAssetId && c.target === connectedAssetId);
+                } else {
+                    // Remove connection where target is current asset AND source is connected asset
+                    return !(c.target === currentAssetId && c.source === connectedAssetId);
+                }
+            });
+
+            const newData = { ...prev, connections: newConnections };
+
+            // Update selectedAsset immediate to reflect changes in UI
+            // We need to do this here because selectedAsset is state, not derived
+            // Use setTimeout to allow state update to propagate if needed, 
+            // but actually we can just re-calculate based on new connections
+            // However, we are inside setLocalData updater, so we have the new data "in hand"
+
+            // Schedule the update of selectedAsset to run after this render cycle completes
+            // or simply update it using the new data calculated
+
+            return newData;
+        });
+
+        // We need to trigger a refresh of selectedAsset. 
+        // Since setLocalData is async, we can't trust localData immediately.
+        // But we can reproduce the filter logic.
+
+        // Actually, let's just use effect or simply update selectedAsset with the known change.
+        // Simpler: Just re-run getAssetData with the hypothetical new data, OR just filter the list in selectedAsset
+
+        setSelectedAsset((prev: any) => {
+            if (!prev) return null;
+            if (direction === 'outgoing') {
+                return {
+                    ...prev,
+                    outgoingConnections: prev.outgoingConnections.filter((c: any) => c.id !== connectedAssetId)
+                };
+            } else {
+                return {
+                    ...prev,
+                    incomingConnections: prev.incomingConnections.filter((c: any) => c.id !== connectedAssetId)
+                };
+            }
+        });
+
+    }, [selectedAsset]);
 
     const onEdgeClick = useCallback((_event: React.MouseEvent, edge: Edge) => {
         // Find parent and child nodes
-        const parentNode = rawData.assets.find(a => a.id === edge.source);
-        const childNode = rawData.assets.find(a => a.id === edge.target);
+        const parentNode = localData.assets.find(a => a.id === edge.source);
+        const childNode = localData.assets.find(a => a.id === edge.target);
 
         if (parentNode && childNode) {
             setSelectedEdge({
@@ -351,11 +458,56 @@ const TopologyMap = () => {
             });
             setDrawerOpen(true);
         }
-    }, []);
+    }, [localData]);
 
-    const systems = rawData.assets.filter(a => a.type === 'System');
-    const databases = rawData.assets.filter(a => a.type === 'Databases');
-    const servers = rawData.assets.filter(a => a.type === 'Servers');
+    const handleAddConnectionStart = (direction: 'incoming' | 'outgoing') => {
+        setAddConnectionDirection(direction);
+        setAddConnectionModalOpen(true);
+    };
+
+    const handleAssetSelect = (targetAssetId: string, connectionType: string) => {
+        if (!selectedAsset?.asset) return;
+
+        const sourceId = addConnectionDirection === 'outgoing' ? selectedAsset.asset.id : targetAssetId;
+        const targetId = addConnectionDirection === 'outgoing' ? targetAssetId : selectedAsset.asset.id;
+
+        setLocalData(prev => {
+            // Check if connection already exists
+            const exists = prev.connections.some(c =>
+                (c.source === sourceId && c.target === targetId)
+            );
+
+            if (exists) return prev;
+
+            const newId = prev.connections.length > 0
+                ? Math.max(...prev.connections.map(c => typeof c.id === 'string' ? parseInt(c.id) : c.id)) + 1
+                : 1;
+
+            const newConnection = {
+                id: newId,
+                source: sourceId,
+                target: targetId,
+                label: connectionType,
+            };
+
+            return {
+                ...prev,
+                connections: [...prev.connections, newConnection]
+            };
+        });
+
+        setAddConnectionModalOpen(false);
+        // Close asset drawer to refresh or keep open? Let's keep open but it needs to refresh data.
+        // Actually, localData update will trigger re-render, but selectedAsset state is separate.
+        // We should update selectedAsset state or close drawer. Closing is simpler for now to force refresh.
+        setAssetDrawerOpen(false);
+    };
+
+
+
+    const systems = localData.assets.filter(a => a.type === 'System');
+    const databases = localData.assets.filter(a => a.type === 'Databases');
+    const servers = localData.assets.filter(a => a.type === 'Servers');
 
     const expandAll = () => {
         if (!selectedSystemId) return;
@@ -368,7 +520,7 @@ const TopologyMap = () => {
             const currentId = queue.shift()!;
             allNodeIds.add(currentId);
 
-            rawData.connections.forEach(conn => {
+            localData.connections.forEach(conn => {
                 if (conn.source === currentId && !visited.has(conn.target)) {
                     visited.add(conn.target);
                     queue.push(conn.target);
@@ -608,6 +760,7 @@ const TopologyMap = () => {
                 nodeTypes={nodeTypes}
                 edgeTypes={edgeTypes}
                 connectionLineType={ConnectionLineType.SmoothStep}
+                onConnect={onConnect}
                 fitView
                 attributionPosition="bottom-right"
             >
@@ -644,6 +797,7 @@ const TopologyMap = () => {
                 parentNode={selectedEdge?.parentNode || null}
                 childNode={selectedEdge?.childNode || null}
                 connectionLabel={selectedEdge?.connectionLabel || ''}
+                onDelete={removeConnection}
             />
 
             {/* Asset Details Drawer */}
@@ -653,6 +807,18 @@ const TopologyMap = () => {
                 asset={selectedAsset?.asset || null}
                 incomingConnections={selectedAsset?.incomingConnections || []}
                 outgoingConnections={selectedAsset?.outgoingConnections || []}
+                onAddConnection={handleAddConnectionStart}
+                onDeleteConnection={handleDeleteConnectionFromDrawer}
+            />
+
+            <AssetSelectionModal
+                isOpen={addConnectionModalOpen}
+                onClose={() => setAddConnectionModalOpen(false)}
+                onSelect={handleAssetSelect}
+                assets={localData.assets}
+                excludeAssetId={selectedAsset?.asset?.id}
+                direction={addConnectionDirection}
+                connectionTypes={Object.keys(connectionColorMap).filter(k => k !== 'default')}
             />
         </div>
     );

@@ -1,5 +1,5 @@
-import { Drawer, Card, Descriptions, Tag, Typography, Space } from 'antd';
-import { CloseOutlined, SwapOutlined, LinkOutlined } from '@ant-design/icons';
+import { Drawer, Card, Descriptions, Tag, Typography, Space, Button, Popconfirm } from 'antd';
+import { CloseOutlined, SwapOutlined, LinkOutlined, DeleteOutlined } from '@ant-design/icons';
 import { iconMap, assetTypeColorMap } from './CustomNode';
 import { useI18n } from '../i18n/I18nContext';
 
@@ -21,9 +21,10 @@ interface ConnectionDrawerProps {
         status?: string;
     } | null;
     connectionLabel: string;
+    onDelete?: () => void;
 }
 
-const ConnectionDrawer = ({ isOpen, onClose, parentNode, childNode, connectionLabel }: ConnectionDrawerProps) => {
+const ConnectionDrawer = ({ isOpen, onClose, parentNode, childNode, connectionLabel, onDelete }: ConnectionDrawerProps) => {
     const { t, dir } = useI18n();
 
     if (!parentNode || !childNode) return null;
@@ -55,6 +56,7 @@ const ConnectionDrawer = ({ isOpen, onClose, parentNode, childNode, connectionLa
                 body: { padding: '24px' },
                 wrapper: { boxShadow: 'none' }
             }}
+
         >
             {/* Connection Type Card */}
             <Card
@@ -96,6 +98,21 @@ const ConnectionDrawer = ({ isOpen, onClose, parentNode, childNode, connectionLa
                             {connectionLabel}
                         </Title>
                     </div>
+                    {onDelete && (
+                        <Popconfirm
+                            title={t('deleteConnectionConfirm' as any) || "Are you sure you want to delete this connection?"}
+                            onConfirm={onDelete}
+                            okText={t('yes' as any) || "Yes"}
+                            cancelText={t('no' as any) || "No"}
+                        >
+                            <Button
+                                type="text"
+                                danger
+                                icon={<DeleteOutlined />}
+                                style={{ background: 'rgba(255,255,255,0.2)', color: 'white', border: 'none' }}
+                            />
+                        </Popconfirm>
+                    )}
                 </div>
             </Card>
 
@@ -230,7 +247,7 @@ const ConnectionDrawer = ({ isOpen, onClose, parentNode, childNode, connectionLa
                     </Descriptions>
                 </Space>
             </Card>
-        </Drawer>
+        </Drawer >
     );
 };
 

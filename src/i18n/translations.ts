@@ -42,6 +42,15 @@ export const translations = {
         type: 'Type:',
         id: 'ID:',
         status: 'Status:',
+        add: 'Add',
+        cancel: 'Cancel',
+        delete: 'Delete',
+        yes: 'Yes',
+        no: 'No',
+        deleteConnectionConfirm: 'Are you sure you want to delete this connection?',
+        addOutgoingConnection: 'Add Outgoing Connection',
+        addIncomingConnection: 'Add Incoming Connection',
+        selectConnectionType: 'Select Connection Type...',
 
         // Language
         language: 'Language',
@@ -118,6 +127,15 @@ export const translations = {
         type: 'סוג:',
         id: 'מזהה:',
         status: 'סטטוס:',
+        add: 'הוסף',
+        cancel: 'ביטול',
+        delete: 'מחק',
+        yes: 'כן',
+        no: 'לא',
+        deleteConnectionConfirm: 'האם אתה בטוח שברצונך למחוק חיבור זה?',
+        addOutgoingConnection: 'הוסף חיבור יוצא',
+        addIncomingConnection: 'הוסף חיבור נכנס',
+        selectConnectionType: 'בחר סוג חיבור...',
 
         // Language
         language: 'שפה',

@@ -1,5 +1,5 @@
-import { Drawer, Card, Tag, Typography, Empty, Space } from 'antd';
-import { CloseOutlined, ArrowRightOutlined, ArrowLeftOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Drawer, Card, Tag, Typography, Empty, Space, Button, Popconfirm } from 'antd';
+import { CloseOutlined, ArrowRightOutlined, ArrowLeftOutlined, InfoCircleOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import { iconMap, assetTypeColorMap } from './CustomNode';
 import { useI18n } from '../i18n/I18nContext';
 
@@ -23,9 +23,11 @@ interface AssetDrawerProps {
     } | null;
     incomingConnections: Connection[];
     outgoingConnections: Connection[];
+    onAddConnection?: (direction: 'incoming' | 'outgoing') => void;
+    onDeleteConnection?: (connectedAssetId: string, direction: 'incoming' | 'outgoing') => void;
 }
 
-const AssetDrawer = ({ isOpen, onClose, asset, incomingConnections, outgoingConnections }: AssetDrawerProps) => {
+const AssetDrawer = ({ isOpen, onClose, asset, incomingConnections, outgoingConnections, onAddConnection, onDeleteConnection }: AssetDrawerProps) => {
     const { t, dir } = useI18n();
 
     if (!asset) return null;
@@ -118,12 +120,22 @@ const AssetDrawer = ({ isOpen, onClose, asset, incomingConnections, outgoingConn
             {/* Outgoing Connections */}
             <Card
                 title={
-                    <Space>
-                        <ArrowRightOutlined style={{ color: '#52c41a' }} />
-                        <Text strong>
-                            {t('outgoingConnections')} ({outgoingConnections.length})
-                        </Text>
-                    </Space>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <Space>
+                            <ArrowRightOutlined style={{ color: '#52c41a' }} />
+                            <Text strong>
+                                {t('outgoingConnections')} ({outgoingConnections.length})
+                            </Text>
+                        </Space>
+                        <Button
+                            type="text"
+                            icon={<PlusOutlined />}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onAddConnection?.('outgoing');
+                            }}
+                        />
+                    </div>
                 }
                 bordered={false}
                 className="animate-fade-in-up"
@@ -164,6 +176,27 @@ const AssetDrawer = ({ isOpen, onClose, asset, incomingConnections, outgoingConn
                                             {connTranslatedType}
                                         </Text>
                                     </Space>
+
+                                    {onDeleteConnection && (
+                                        <div style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)' }} onClick={e => e.stopPropagation()}>
+                                            <Popconfirm
+                                                title={t('deleteConnectionConfirm' as any) || "Delete?"}
+                                                onConfirm={(e) => {
+                                                    e?.stopPropagation();
+                                                    onDeleteConnection(conn.id, 'outgoing');
+                                                }}
+                                                okText={t('yes' as any)}
+                                                cancelText={t('no' as any)}
+                                            >
+                                                <Button
+                                                    type="text"
+                                                    danger
+                                                    size="small"
+                                                    icon={<DeleteOutlined />}
+                                                />
+                                            </Popconfirm>
+                                        </div>
+                                    )}
                                 </Card>
                             );
                         })}
@@ -172,70 +205,104 @@ const AssetDrawer = ({ isOpen, onClose, asset, incomingConnections, outgoingConn
             </Card>
 
             {/* Incoming Flow Animation */}
-            {incomingConnections.length > 0 && (
-                <div className="connection-flow-container animate-fade-in-up" style={{ height: 40, margin: '0 0 16px 0', animationDelay: '0.4s' }}>
-                    <div className="connection-flow-line" />
-                    <div className="connection-flow-particle reverse" />
-                    <div className="connection-flow-arrow reverse">▼</div>
-                </div>
-            )}
+            {
+                incomingConnections.length > 0 && (
+                    <div className="connection-flow-container animate-fade-in-up" style={{ height: 40, margin: '0 0 16px 0', animationDelay: '0.4s' }}>
+                        <div className="connection-flow-line" />
+                        <div className="connection-flow-particle reverse" />
+                        <div className="connection-flow-arrow reverse">▼</div>
+                    </div>
+                )
+            }
 
             {/* Incoming Connections */}
             <Card
                 title={
-                    <Space>
-                        <ArrowLeftOutlined style={{ color: '#1890ff' }} />
-                        <Text strong>
-                            {t('incomingConnections')} ({incomingConnections.length})
-                        </Text>
-                    </Space>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <Space>
+                            <ArrowLeftOutlined style={{ color: '#1890ff' }} />
+                            <Text strong>
+                                {t('incomingConnections')} ({incomingConnections.length})
+                            </Text>
+                        </Space>
+                        <Button
+                            type="text"
+                            icon={<PlusOutlined />}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onAddConnection?.('incoming');
+                            }}
+                        />
+                    </div>
                 }
                 className="animate-fade-in-up"
                 bordered={false}
                 style={{ borderRadius: 12, animationDelay: '0.5s' }}
             >
-                {incomingConnections.length === 0 ? (
-                    <Empty
-                        description={t('noIncomingConnections')}
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    />
-                ) : (
-                    <Space direction="vertical" size="small" style={{ width: '100%' }}>
-                        {incomingConnections.map((conn, index) => {
-                            const ConnIcon = iconMap[conn.type] || iconMap.default;
-                            const connColor = assetTypeColorMap[conn.type] || assetTypeColorMap.default;
-                            const connTranslatedType = (t as any).assetTypes?.[conn.type] || conn.type;
+                {
+                    incomingConnections.length === 0 ? (
+                        <Empty
+                            description={t('noIncomingConnections')}
+                            image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        />
+                    ) : (
+                        <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                            {incomingConnections.map((conn, index) => {
+                                const ConnIcon = iconMap[conn.type] || iconMap.default;
+                                const connColor = assetTypeColorMap[conn.type] || assetTypeColorMap.default;
+                                const connTranslatedType = (t as any).assetTypes?.[conn.type] || conn.type;
 
-                            return (
-                                <Card
-                                    key={index}
-                                    size="small"
-                                    className="premium-hover-card"
-                                    style={{
-                                        borderRadius: 8,
-                                        borderLeft: `4px solid ${connColor}`,
-                                        cursor: 'pointer',
-                                    }}
-                                >
-                                    <Space direction="vertical" size={4} style={{ width: '100%' }}>
-                                        <Tag color="blue" style={{ marginBottom: 4 }}>
-                                            {conn.label}
-                                        </Tag>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                            <ConnIcon size={16} color={connColor} />
-                                            <Text strong>{conn.name}</Text>
-                                        </div>
-                                        <Text type="secondary" style={{ fontSize: 12 }}>
-                                            {connTranslatedType}
-                                        </Text>
-                                    </Space>
-                                </Card>
-                            );
-                        })}
-                    </Space>
-                )}
-            </Card>
-        </Drawer>
+                                return (
+                                    <Card
+                                        key={index}
+                                        size="small"
+                                        className="premium-hover-card"
+                                        style={{
+                                            borderRadius: 8,
+                                            borderLeft: `4px solid ${connColor}`,
+                                            cursor: 'pointer',
+                                        }}
+                                    >
+                                        <Space direction="vertical" size={4} style={{ width: '100%' }}>
+                                            <Tag color="blue" style={{ marginBottom: 4 }}>
+                                                {conn.label}
+                                            </Tag>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                                <ConnIcon size={16} color={connColor} />
+                                                <Text strong>{conn.name}</Text>
+                                            </div>
+                                            <Text type="secondary" style={{ fontSize: 12 }}>
+                                                {connTranslatedType}
+                                            </Text>
+                                        </Space>
+                                        {onDeleteConnection && (
+                                            <div style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)' }} onClick={e => e.stopPropagation()}>
+                                                <Popconfirm
+                                                    title={t('deleteConnectionConfirm' as any) || "Delete?"}
+                                                    onConfirm={(e) => {
+                                                        e?.stopPropagation();
+                                                        onDeleteConnection(conn.id, 'incoming');
+                                                    }}
+                                                    okText={t('yes' as any)}
+                                                    cancelText={t('no' as any)}
+                                                >
+                                                    <Button
+                                                        type="text"
+                                                        danger
+                                                        size="small"
+                                                        icon={<DeleteOutlined />}
+                                                    />
+                                                </Popconfirm>
+                                            </div>
+                                        )}
+                                    </Card>
+                                );
+                            })}
+                        </Space>
+                    )
+                }
+            </Card >
+        </Drawer >
     );
 };
 
