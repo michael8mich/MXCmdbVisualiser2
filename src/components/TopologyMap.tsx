@@ -29,7 +29,7 @@ import { useTheme } from '../contexts/ThemeContext';
 
 import CustomEdge from './CustomEdge';
 
-const connectionColorMap: Record<string, string> = {
+export const connectionColorMap: Record<string, string> = {
     'hosts': '#2563eb', // Blue
     'communicates with': '#10b981', // Emerald Green
     'connects to': '#16a34a', // Green

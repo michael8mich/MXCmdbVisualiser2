@@ -1,6 +1,8 @@
-import { Modal, Select, Space } from 'antd';
+import { Modal, Select, Space, Tag } from 'antd';
 import { useState } from 'react';
 import { useI18n } from '../i18n/I18nContext';
+import { iconMap, assetTypeColorMap } from './CustomNode';
+import { connectionColorMap } from './TopologyMap';
 
 interface Asset {
     id: string;
@@ -70,14 +72,28 @@ const AssetSelectionModal = ({
                     placeholder={t('selectAsset') || 'Select Asset'}
                     optionFilterProp="children"
                     filterOption={(input, option) =>
-                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                        ((option as any)?.searchText ?? '').toLowerCase().includes(input.toLowerCase())
                     }
                     onChange={setSelectedId}
                     value={selectedId}
-                    options={filteredAssets.map(asset => ({
-                        value: asset.id,
-                        label: `${asset.name} (${asset.type})` // Simple display format
-                    }))}
+                    options={filteredAssets.map(asset => {
+                        const Icon = iconMap[asset.type] || iconMap.default;
+                        const iconColor = assetTypeColorMap[asset.type] || assetTypeColorMap.default;
+
+                        return {
+                            value: asset.id,
+                            searchText: asset.name,
+                            label: (
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                    <Icon size={16} color={iconColor} />
+                                    <span>{asset.name}</span>
+                                    <Tag style={{ marginLeft: 'auto', marginRight: 0 }} color={iconColor === '#94a3b8' ? 'default' : iconColor}>
+                                        {asset.type}
+                                    </Tag>
+                                </div>
+                            )
+                        };
+                    })}
                 />
 
                 <div style={{ marginTop: 12 }}>{t('selectConnectionType') || 'Select Connection Type'}:</div>
@@ -86,10 +102,23 @@ const AssetSelectionModal = ({
                     placeholder={t('selectConnectionType') || 'Select Connection Type'}
                     onChange={setSelectedConnectionType}
                     value={selectedConnectionType}
-                    options={connectionTypes.map(type => ({
-                        value: type,
-                        label: type
-                    }))}
+                    options={connectionTypes.map(type => {
+                        const color = connectionColorMap[type] || connectionColorMap.default;
+                        return {
+                            value: type,
+                            label: (
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                    <div style={{
+                                        width: 12,
+                                        height: 12,
+                                        borderRadius: '50%',
+                                        backgroundColor: color
+                                    }} />
+                                    <span>{type}</span>
+                                </div>
+                            )
+                        };
+                    })}
                 />
             </Space>
         </Modal>
