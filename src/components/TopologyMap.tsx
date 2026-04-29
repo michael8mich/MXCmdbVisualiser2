@@ -17,7 +17,8 @@ import { useSearchParams } from 'react-router-dom';
 import { Maximize2, Minimize2 } from 'lucide-react';
 import 'reactflow/dist/style.css';
 
-import CustomNode, { assetTypeColorMap, iconMap } from './CustomNode';
+import CustomNode, { assetTypeColorMap } from './CustomNode';
+import { useIconMap } from '../context/IconContext';
 import ConnectionDrawer from './ConnectionDrawer';
 import AssetDrawer from './AssetDrawer';
 import SearchableSelect from './SearchableSelect';
@@ -56,6 +57,7 @@ const edgeTypes = {
 const TopologyMap = () => {
     console.log('TopologyMap rendering...');
     const { t, language, setLanguage, dir } = useI18n();
+    const { getIcon } = useIconMap();
     const { theme } = useTheme();
     const [localData, setLocalData] = useState(rawData);
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -330,7 +332,7 @@ const TopologyMap = () => {
         setSelectedEdge(null);
     }, [selectedEdge]);
 
-    const onNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
+    const onNodeClick = useCallback((_event: React.MouseEvent, node: Node) => {
         // Store the clicked node's ID and current position before expansion triggers a re-layout
         lastClickedNodeRef.current = {
             id: node.id,
@@ -679,7 +681,7 @@ const TopologyMap = () => {
                                 {Object.entries(assetTypeColorMap)
                                     .filter(([key]) => key !== 'default' && !['Server', 'Switch', 'Router', 'Firewall', 'Database', 'Load Balancer', 'Workstation'].includes(key))
                                     .map(([label, color]) => {
-                                        const Icon = iconMap[label] || iconMap.default;
+                                        const Icon = getIcon(label);
                                         return (
                                             <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', flexDirection: dir === 'rtl' ? 'row-reverse' : 'row' }}>
                                                 <div style={{

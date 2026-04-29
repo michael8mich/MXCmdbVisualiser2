@@ -4,7 +4,7 @@ import { translations, type Language, type TranslationKey } from './translations
 interface I18nContextType {
     language: Language;
     setLanguage: (lang: Language) => void;
-    t: (key: TranslationKey) => string;
+    t: (key: TranslationKey) => any;
     dir: 'ltr' | 'rtl';
 }
 
@@ -13,7 +13,7 @@ const I18nContext = createContext<I18nContextType | undefined>(undefined);
 export const I18nProvider = ({ children }: { children: ReactNode }) => {
     const [language, setLanguage] = useState<Language>('en');
 
-    const t = (key: TranslationKey): string => {
+    const t = (key: TranslationKey): any => {
         return translations[language][key] || key;
     };
 

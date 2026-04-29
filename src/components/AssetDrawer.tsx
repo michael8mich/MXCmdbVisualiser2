@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Drawer, Card, Tag, Typography, Empty, Space, Button, Popconfirm } from 'antd';
 import { CloseOutlined, ArrowRightOutlined, ArrowLeftOutlined, InfoCircleOutlined, PlusOutlined, DeleteOutlined, DownOutlined, RightOutlined } from '@ant-design/icons';
-import { iconMap, assetTypeColorMap } from './CustomNode';
+import { assetTypeColorMap } from './CustomNode';
+import { useIconMap } from '../context/IconContext';
 import { useI18n } from '../i18n/I18nContext';
 
 const { Title, Text } = Typography;
@@ -30,12 +31,14 @@ interface AssetDrawerProps {
 
 const AssetDrawer = ({ isOpen, onClose, asset, incomingConnections, outgoingConnections, onAddConnection, onDeleteConnection }: AssetDrawerProps) => {
     const { t, dir } = useI18n();
+    const { getIcon } = useIconMap();
     const [showOutgoing, setShowOutgoing] = useState(false);
     const [showIncoming, setShowIncoming] = useState(false);
 
     if (!asset) return null;
 
-    const Icon = iconMap[asset.type] || iconMap.default;
+    // Use getIcon from context
+    const Icon = getIcon(asset.type);
     const iconColor = assetTypeColorMap[asset.type] || assetTypeColorMap.default;
     const translatedType = (t as any).assetTypes?.[asset.type] || asset.type;
 
@@ -157,7 +160,7 @@ const AssetDrawer = ({ isOpen, onClose, asset, incomingConnections, outgoingConn
                     ) : (
                         <Space direction="vertical" size="small" style={{ width: '100%' }}>
                             {outgoingConnections.map((conn, index) => {
-                                const ConnIcon = iconMap[conn.type] || iconMap.default;
+                                const ConnIcon = getIcon(conn.type);
                                 const connColor = assetTypeColorMap[conn.type] || assetTypeColorMap.default;
                                 const connTranslatedType = (t as any).assetTypes?.[conn.type] || conn.type;
 
@@ -261,7 +264,7 @@ const AssetDrawer = ({ isOpen, onClose, asset, incomingConnections, outgoingConn
                     ) : (
                         <Space direction="vertical" size="small" style={{ width: '100%' }}>
                             {incomingConnections.map((conn, index) => {
-                                const ConnIcon = iconMap[conn.type] || iconMap.default;
+                                const ConnIcon = getIcon(conn.type);
                                 const connColor = assetTypeColorMap[conn.type] || assetTypeColorMap.default;
                                 const connTranslatedType = (t as any).assetTypes?.[conn.type] || conn.type;
 

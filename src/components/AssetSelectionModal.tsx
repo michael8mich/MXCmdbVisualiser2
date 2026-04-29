@@ -1,7 +1,8 @@
 import { Modal, Select, Space, Tag } from 'antd';
 import { useState } from 'react';
 import { useI18n } from '../i18n/I18nContext';
-import { iconMap, assetTypeColorMap } from './CustomNode';
+import { assetTypeColorMap } from './CustomNode';
+import { useIconMap } from '../context/IconContext';
 import { connectionColorMap } from './TopologyMap';
 
 interface Asset {
@@ -29,7 +30,8 @@ const AssetSelectionModal = ({
     direction,
     connectionTypes
 }: AssetSelectionModalProps) => {
-    const { t, dir } = useI18n();
+    const { t } = useI18n();
+    const { getIcon } = useIconMap();
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [selectedConnectionType, setSelectedConnectionType] = useState<string | null>('connects to');
 
@@ -62,7 +64,6 @@ const AssetSelectionModal = ({
             okText={t('add') || 'Add'}
             cancelText={t('cancel') || 'Cancel'}
             okButtonProps={{ disabled: !selectedId || !selectedConnectionType }}
-            dir={dir as any}
         >
             <Space direction="vertical" style={{ width: '100%' }}>
                 <div>{t('selectAsset') || 'Select Asset'}:</div>
@@ -77,7 +78,7 @@ const AssetSelectionModal = ({
                     onChange={setSelectedId}
                     value={selectedId}
                     options={filteredAssets.map(asset => {
-                        const Icon = iconMap[asset.type] || iconMap.default;
+                        const Icon = getIcon(asset.type);
                         const iconColor = assetTypeColorMap[asset.type] || assetTypeColorMap.default;
 
                         return {

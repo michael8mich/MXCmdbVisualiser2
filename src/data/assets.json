@@ -198,6 +198,12 @@
       "source": "TestUnknownAsset",
       "target": "מערכת תפנית",
       "label": "unknown_connection_type"
+    },
+    {
+      "id": 404418,
+      "source": "TestUnknownAsset",
+      "target": "מערכת תפנית",
+      "label": "connects to"
     }
   ]
 }

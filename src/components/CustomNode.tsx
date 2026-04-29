@@ -1,49 +1,10 @@
 import React, { memo } from 'react';
 import { Handle, Position, type NodeProps } from 'reactflow';
-import {
-    Server, Network, Shield, Database, Globe, Monitor, Box, Layers,
-    HardDrive, Plug, Package, Laptop, Users, Printer, Tv, ScanLine,
-    Usb, Barcode, Save, Radio, Lock, Settings, FileCode, ShieldCheck,
-    Smartphone, HelpCircle, Tablet, Cloud, Wrench
-} from 'lucide-react';
 import { useI18n } from '../i18n/I18nContext';
 
-export const iconMap: Record<string, React.ElementType> = {
-    'Hardware': HardDrive,
-    'Interfaces': Plug,
-    'Entitlement Packages': Package,
-    'Computers': Laptop,
-    'AD Groups': Users,
-    'Printers': Printer,
-    'Monitors': Tv,
-    'Scanners': ScanLine,
-    'Peripheral Equipment': Usb,
-    'Barcode Readers': Barcode,
-    'Storage Devices': Save,
-    'Communication Equipment': Radio,
-    'Permissions': Lock,
-    'Settings': Settings,
-    'Software Items': FileCode,
-    'Information Security': ShieldCheck,
-    'System': Box,
-    'Servers': Server,
-    'Miscellaneous': HelpCircle,
-    'Handheld Devices': Tablet,
-    'Databases': Database,
-    'Storage and Backup': Cloud,
-    'Service': Wrench,
-    'Mobile Devices': Smartphone,
-    'Unknown': HelpCircle,
-    // Legacy types
-    'Server': Server,
-    'Switch': Network,
-    'Router': Globe,
-    'Firewall': Shield,
-    'Database': Database,
-    'Load Balancer': Layers,
-    'Workstation': Monitor,
-    default: Box,
-};
+// iconMap removed - now using IconContext
+import { useIconMap } from '../context/IconContext';
+
 
 // Color mapping by asset type category
 export const assetTypeColorMap: Record<string, string> = {
@@ -115,7 +76,8 @@ const hexToRgba = (hex: string, alpha: number) => {
 
 const CustomNode = ({ data }: NodeProps) => {
     const { t } = useI18n();
-    const Icon = iconMap[data.type] || iconMap.default;
+    const { getIcon } = useIconMap();
+    const Icon = getIcon(data.type);
     const iconColor = assetTypeColorMap[data.type] || assetTypeColorMap.default;
     const isError = data.status === 'error';
     const hasChildren = data.childCount > 0;

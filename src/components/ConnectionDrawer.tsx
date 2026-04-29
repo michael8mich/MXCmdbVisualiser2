@@ -1,6 +1,7 @@
 import { Drawer, Card, Descriptions, Tag, Typography, Space, Button, Popconfirm } from 'antd';
 import { CloseOutlined, SwapOutlined, LinkOutlined, DeleteOutlined } from '@ant-design/icons';
-import { iconMap, assetTypeColorMap } from './CustomNode';
+import { assetTypeColorMap } from './CustomNode';
+import { useIconMap } from '../context/IconContext';
 import { useI18n } from '../i18n/I18nContext';
 
 const { Title, Text } = Typography;
@@ -26,14 +27,15 @@ interface ConnectionDrawerProps {
 
 const ConnectionDrawer = ({ isOpen, onClose, parentNode, childNode, connectionLabel, onDelete }: ConnectionDrawerProps) => {
     const { t, dir } = useI18n();
+    const { getIcon } = useIconMap();
 
     if (!parentNode || !childNode) return null;
 
-    const ParentIcon = iconMap[parentNode.type] || iconMap.default;
+    const ParentIcon = getIcon(parentNode.type);
     const parentColor = assetTypeColorMap[parentNode.type] || assetTypeColorMap.default;
     const parentTranslatedType = (t as any).assetTypes?.[parentNode.type] || parentNode.type;
 
-    const ChildIcon = iconMap[childNode.type] || iconMap.default;
+    const ChildIcon = getIcon(childNode.type);
     const childColor = assetTypeColorMap[childNode.type] || assetTypeColorMap.default;
     const childTranslatedType = (t as any).assetTypes?.[childNode.type] || childNode.type;
 
