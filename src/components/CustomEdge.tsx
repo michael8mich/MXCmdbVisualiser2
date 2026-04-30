@@ -24,9 +24,23 @@ const CustomEdge = ({
 
     const animationDelay = data?.animationDelay || '0s';
 
+    // Calculate vertical stacking offset for multiple labels between same nodes
+    let stackingOffset = 0;
+    if (data?.labelCount > 1 && typeof data.labelIndex === 'number') {
+        const spacing = 22; // px between stacked labels
+        stackingOffset = (data.labelIndex - (data.labelCount - 1) / 2) * spacing;
+    }
+
     return (
-        <g className="animate-fade-in" style={{ animationDelay }}>
-            <BaseEdge path={edgePath} markerEnd={markerEnd} style={style} />
+        <g
+            className="animate-fade-in"
+            style={{ animationDelay }}
+        >
+            <BaseEdge
+                path={edgePath}
+                markerEnd={markerEnd}
+                style={style}
+            />
             <circle r="4" fill={style.stroke || '#f5576c'}>
                 <animateMotion dur="2s" repeatCount="indefinite" path={edgePath}>
                     <mpath href={`#${id}`} />
@@ -37,20 +51,24 @@ const CustomEdge = ({
                     <div
                         style={{
                             position: 'absolute',
-                            transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-                            background: '#ffffff',
-                            padding: '2px 6px',
-                            borderRadius: 4,
-                            fontSize: 10,
+                            transform: `translate(-50%, -50%) translate(${labelX}px,${labelY + stackingOffset}px)`,
+                            background: '#fff',
+                            padding: '2px 8px',
+                            borderRadius: 6,
+                            fontSize: 11,
                             fontWeight: 700,
                             pointerEvents: 'all',
-                            border: `1px solid ${style.stroke}`,
+                            border: `2px solid ${style.stroke}`,
                             color: style.stroke,
-                            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                            boxShadow: `0 2px 8px ${style.stroke || '#888'}33`,
                             zIndex: 10,
                             animationDelay,
+                            margin: '2px 0',
+                            backgroundClip: 'padding-box',
                         }}
                         className="nodrag nopan animate-fade-in"
+                        onMouseOver={data?.onMouseOver}
+                        onMouseLeave={data?.onMouseLeave}
                     >
                         {label}
                     </div>

@@ -78,6 +78,10 @@ const TopologyMap = () => {
     const [rfInstance, setRfInstance] = useState<any>(null);
     const [addConnectionModalOpen, setAddConnectionModalOpen] = useState(false);
     const [addConnectionDirection, setAddConnectionDirection] = useState<'incoming' | 'outgoing'>('outgoing');
+    // Popup state for edge hover
+    const [popupOpen, setPopupOpen] = useState(false);
+    const [popupContent, setPopupContent] = useState<any>(null);
+    const [popupPosition, setPopupPosition] = useState<{x: number, y: number} | null>(null);
     const centeredSystemIdRef = useRef<string | null>(null);
     const lastClickedNodeRef = useRef<{ id: string; x: number; y: number } | null>(null);
 
@@ -462,6 +466,29 @@ const TopologyMap = () => {
         }
     }, [localData]);
 
+    // Mouse over edge handler for popup
+    const handleEdgeMouseOver = (event: React.MouseEvent, edge: Edge) => {
+        // Find parent and child nodes
+        const parentNode = localData.assets.find(a => a.id === edge.source);
+        const childNode = localData.assets.find(a => a.id === edge.target);
+        if (parentNode && childNode) {
+            setPopupContent({
+                parentNode,
+                childNode,
+                connectionLabel: edge.label as string || 'Unknown',
+                connectionId: edge.id,
+            });
+            setPopupOpen(true);
+            setPopupPosition({ x: event.clientX, y: event.clientY });
+        }
+    };
+
+    const handleEdgeMouseLeave = () => {
+        setPopupOpen(false);
+        setPopupContent(null);
+        setPopupPosition(null);
+    };
+
     const handleAddConnectionStart = (direction: 'incoming' | 'outgoing') => {
         setAddConnectionDirection(direction);
         setAddConnectionModalOpen(true);
@@ -752,7 +779,32 @@ const TopologyMap = () => {
 
             <ReactFlow
                 nodes={nodes}
-                edges={edges}
+                edges={(() => {
+                    // Group edges by source-target pair
+                    const edgeGroups = new Map();
+                    edges.forEach(edge => {
+                        const key = `${edge.source}__${edge.target}`;
+                        if (!edgeGroups.has(key)) edgeGroups.set(key, []);
+                        edgeGroups.get(key).push(edge);
+                    });
+                    // Assign stacking index and count
+                    return edges.map(edge => {
+                        const key = `${edge.source}__${edge.target}`;
+                        const group = edgeGroups.get(key);
+                        const labelIndex = group.findIndex(e => e.id === edge.id);
+                        const labelCount = group.length;
+                        return {
+                            ...edge,
+                            data: {
+                                ...edge.data,
+                                onMouseOver: (event: React.MouseEvent) => handleEdgeMouseOver(event, edge),
+                                onMouseLeave: handleEdgeMouseLeave,
+                                labelIndex,
+                                labelCount,
+                            }
+                        };
+                    });
+                })()}
                 onNodesChange={onNodesChange}
                 onEdgesChange={onEdgesChange}
                 onNodeClick={onNodeClick}
@@ -792,6 +844,38 @@ const TopologyMap = () => {
                 </Controls>
             </ReactFlow>
 
+            {/* Popup window for edge hover */}
+            {popupOpen && popupContent && popupPosition && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        left: popupPosition.x + 12,
+                        top: popupPosition.y + 12,
+                        zIndex: 9999,
+                        background: 'white',
+                        border: '1px solid #ddd',
+                        borderRadius: 8,
+                        boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
+                        padding: 16,
+                        minWidth: 220,
+                        pointerEvents: 'none',
+                        color: '#222',
+                    }}
+                >
+                    <div style={{ fontWeight: 700, marginBottom: 8 }}>
+                        Type: {popupContent.connectionLabel}
+                    </div>
+                    <div style={{ fontSize: 13, marginBottom: 4 }}>
+                        <span style={{ fontWeight: 500 }}>ID: </span>{popupContent.connectionId}
+                    </div>
+                    <div style={{ fontSize: 13, marginBottom: 4 }}>
+                        <span style={{ fontWeight: 500 }}>From: </span>{popupContent.parentNode.name} ({popupContent.parentNode.type})
+                    </div>
+                    <div style={{ fontSize: 13 }}>
+                        <span style={{ fontWeight: 500 }}>To: </span>{popupContent.childNode.name} ({popupContent.childNode.type})
+                    </div>
+                </div>
+            )}
             {/* Connection Details Drawer */}
             <ConnectionDrawer
                 isOpen={drawerOpen}
