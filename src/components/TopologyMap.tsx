@@ -780,16 +780,20 @@ const TopologyMap = () => {
             <ReactFlow
                 nodes={nodes}
                 edges={(() => {
-                    // Group edges by source-target pair
+                    // Group edges by unordered node pair (regardless of direction)
                     const edgeGroups = new Map();
                     edges.forEach(edge => {
-                        const key = `${edge.source}__${edge.target}`;
+                        const key = [edge.source, edge.target].sort().join('__');
                         if (!edgeGroups.has(key)) edgeGroups.set(key, []);
                         edgeGroups.get(key).push(edge);
                     });
+                    // Sort each group by label length (shortest first, longest last)
+                    edgeGroups.forEach(group => {
+                        group.sort((a, b) => (a.label?.length || 0) - (b.label?.length || 0));
+                    });
                     // Assign stacking index and count
                     return edges.map(edge => {
-                        const key = `${edge.source}__${edge.target}`;
+                        const key = [edge.source, edge.target].sort().join('__');
                         const group = edgeGroups.get(key);
                         const labelIndex = group.findIndex(e => e.id === edge.id);
                         const labelCount = group.length;
