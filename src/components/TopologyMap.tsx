@@ -781,21 +781,21 @@ const TopologyMap = () => {
                 nodes={nodes}
                 edges={(() => {
                     // Group edges by unordered node pair (regardless of direction)
-                    const edgeGroups = new Map();
-                    edges.forEach(edge => {
+                    const edgeGroups = new Map<string, typeof edges>();
+                    edges.forEach((edge) => {
                         const key = [edge.source, edge.target].sort().join('__');
-                        if (!edgeGroups.has(key)) edgeGroups.set(key, []);
-                        edgeGroups.get(key).push(edge);
+                        if (!edgeGroups.has(key)) edgeGroups.set(key, [] as typeof edges);
+                        edgeGroups.get(key)!.push(edge);
                     });
                     // Sort each group by label length (shortest first, longest last)
-                    edgeGroups.forEach(group => {
-                        group.sort((a, b) => (a.label?.length || 0) - (b.label?.length || 0));
+                    edgeGroups.forEach((group: typeof edges) => {
+                        group.sort((a: typeof edges[number], b: typeof edges[number]) => (a.label?.length || 0) - (b.label?.length || 0));
                     });
                     // Assign stacking index and count
                     return edges.map(edge => {
                         const key = [edge.source, edge.target].sort().join('__');
-                        const group = edgeGroups.get(key);
-                        const labelIndex = group.findIndex(e => e.id === edge.id);
+                        const group = edgeGroups.get(key)!;
+                        const labelIndex = group.findIndex((e: typeof edges[number]) => e.id === edge.id);
                         const labelCount = group.length;
                         return {
                             ...edge,
@@ -849,37 +849,109 @@ const TopologyMap = () => {
             </ReactFlow>
 
             {/* Popup window for edge hover */}
-            {popupOpen && popupContent && popupPosition && (
-                <div
-                    style={{
-                        position: 'fixed',
-                        left: popupPosition.x + 12,
-                        top: popupPosition.y + 12,
-                        zIndex: 9999,
-                        background: 'white',
-                        border: '1px solid #ddd',
-                        borderRadius: 8,
-                        boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
-                        padding: 16,
-                        minWidth: 220,
-                        pointerEvents: 'none',
-                        color: '#222',
-                    }}
-                >
-                    <div style={{ fontWeight: 700, marginBottom: 8 }}>
-                        Type: {popupContent.connectionLabel}
+            {popupOpen && popupContent && popupPosition && (() => {
+                // Get icons and colors for parent/child
+                const ParentIcon = getIcon(popupContent.parentNode.type);
+                const parentColor = assetTypeColorMap[popupContent.parentNode.type] || assetTypeColorMap.default;
+                const ChildIcon = getIcon(popupContent.childNode.type);
+                const childColor = assetTypeColorMap[popupContent.childNode.type] || assetTypeColorMap.default;
+                const connectionColor = connectionColorMap[popupContent.connectionLabel] || connectionColorMap.default;
+                // Theme-based styles
+                const isDark = theme === 'dark';
+                const popupBg = isDark ? '#23272f' : 'white';
+                const popupText = isDark ? '#f3f4f6' : '#222';
+                const popupBorder = `2px solid ${connectionColor}`;
+                const popupShadow = isDark
+                    ? '0 8px 32px 0 rgba(0,0,0,0.45)'
+                    : '0 8px 32px 0 rgba(31,38,135,0.18)';
+                return (
+                    <div
+                        style={{
+                            position: 'fixed',
+                            left: popupPosition.x + 12,
+                            top: popupPosition.y + 12,
+                            zIndex: 9999,
+                            background: popupBg,
+                            border: popupBorder,
+                            borderRadius: 12,
+                            boxShadow: popupShadow,
+                            padding: 18,
+                            minWidth: 260,
+                            pointerEvents: 'none',
+                            color: popupText,
+                            fontFamily: 'inherit',
+                            transition: 'background 0.2s, color 0.2s',
+                        }}
+                    >
+                        {/* Connection type */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                            <div style={{
+                                width: 32,
+                                height: 32,
+                                borderRadius: 8,
+                                background: `${connectionColor}22`,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: connectionColor,
+                                fontWeight: 700,
+                                fontSize: 18,
+                                flexShrink: 0,
+                            }}>
+                                {/* Link icon style */}
+                                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 1 0-6m2.83-2.83a4 4 0 0 1 5.66 5.66l-3 3a4 4 0 0 1-5.66-5.66l1-1" /></svg>
+                            </div>
+                            <div style={{ flex: 1 }}>
+                                <span style={{ color: '#888', fontSize: 12, fontWeight: 500 }}>{t('connectionType') || 'Connection Type'}</span>
+                                <div style={{ color: connectionColor, fontWeight: 700, fontSize: 16, lineHeight: 1.2 }}>{popupContent.connectionLabel}</div>
+                            </div>
+                            <span style={{ fontSize: 12, color: '#aaa', fontWeight: 500 }}>ID: {popupContent.connectionId}</span>
+                        </div>
+                        {/* Parent node */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                            <div style={{
+                                width: 28,
+                                height: 28,
+                                borderRadius: 7,
+                                background: `${parentColor}18`,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: parentColor,
+                                flexShrink: 0,
+                            }}>
+                                <ParentIcon size={18} />
+                            </div>
+                            <div style={{ flex: 1 }}>
+                                <span style={{ fontWeight: 600, color: parentColor }}>{popupContent.parentNode.name}</span>
+                                <span style={{ fontSize: 12, color: '#888', marginLeft: 6 }}>{popupContent.parentNode.type}</span>
+                            </div>
+                            <span style={{ fontSize: 11, color: '#aaa' }}>{t('parentSource') || 'Source'}</span>
+                        </div>
+                        {/* Child node */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                            <div style={{
+                                width: 28,
+                                height: 28,
+                                borderRadius: 7,
+                                background: `${childColor}18`,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: childColor,
+                                flexShrink: 0,
+                            }}>
+                                <ChildIcon size={18} />
+                            </div>
+                            <div style={{ flex: 1 }}>
+                                <span style={{ fontWeight: 600, color: childColor }}>{popupContent.childNode.name}</span>
+                                <span style={{ fontSize: 12, color: '#888', marginLeft: 6 }}>{popupContent.childNode.type}</span>
+                            </div>
+                            <span style={{ fontSize: 11, color: '#aaa' }}>{t('childTarget') || 'Target'}</span>
+                        </div>
                     </div>
-                    <div style={{ fontSize: 13, marginBottom: 4 }}>
-                        <span style={{ fontWeight: 500 }}>ID: </span>{popupContent.connectionId}
-                    </div>
-                    <div style={{ fontSize: 13, marginBottom: 4 }}>
-                        <span style={{ fontWeight: 500 }}>From: </span>{popupContent.parentNode.name} ({popupContent.parentNode.type})
-                    </div>
-                    <div style={{ fontSize: 13 }}>
-                        <span style={{ fontWeight: 500 }}>To: </span>{popupContent.childNode.name} ({popupContent.childNode.type})
-                    </div>
-                </div>
-            )}
+                );
+            })()}
             {/* Connection Details Drawer */}
             <ConnectionDrawer
                 isOpen={drawerOpen}

@@ -3,97 +3,116 @@
     {
       "id": "מערכת תפנית",
       "name": "מערכת תפנית",
-      "type": "System"
+      "type": "System",
+      "englishName": ""
     },
     {
       "id": "C1Z3H1-076-0088",
       "name": "C1Z3H1-076-0088",
-      "type": "Peripheral Equipment"
+      "type": "Peripheral Equipment",
+      "englishName": ""
     },
     {
       "id": "Mars01",
       "name": "Mars01",
-      "type": "Servers"
+      "type": "Servers",
+      "englishName": ""
     },
     {
       "id": "#AMAIN514",
       "name": "#AMAIN514",
-      "type": "Permissions"
+      "type": "Permissions",
+      "englishName": ""
     },
     {
       "id": "Mars02",
       "name": "Mars02",
-      "type": "Servers"
+      "type": "Servers",
+      "englishName": ""
     },
     {
       "id": "C107366",
       "name": "C107366",
-      "type": "Hardware"
+      "type": "Hardware",
+      "englishName": ""
     },
     {
       "id": "Grace\\Grace",
       "name": "Grace\\Grace",
-      "type": "Databases"
+      "type": "Databases",
+      "englishName": ""
     },
     {
       "id": "Grace\\Grace.mdb",
       "name": "Grace\\Grace.mdb",
-      "type": "Databases"
+      "type": "Databases",
+      "englishName": ""
     },
     {
       "id": "bgn-cor-02",
       "name": "bgn-cor-02",
-      "type": "Servers"
+      "type": "Servers",
+      "englishName": ""
     },
     {
       "id": "Morgan",
       "name": "Morgan",
-      "type": "Servers"
+      "type": "Servers",
+      "englishName": ""
     },
     {
       "id": "maagarMida1",
       "name": "maagarMida1",
-      "type": "System"
+      "type": "System",
+      "englishName": ""
     },
     {
       "id": "הארשאות ממשימות",
       "name": "הארשאות ממשימות",
-      "type": "Interfaces"
+      "type": "Interfaces",
+      "englishName": ""
     },
     {
       "id": "בניית קבוצות AD",
       "name": "בניית קבוצות AD",
-      "type": "Interfaces"
+      "type": "Interfaces",
+      "englishName": ""
     },
     {
       "id": "סמארטפון מוקשח",
       "name": "סמארטפון מוקשח",
-      "type": "Mobile Devices"
+      "type": "Mobile Devices",
+      "englishName": ""
     },
     {
       "id": "סמארטפון1",
       "name": "סמארטפון1",
-      "type": "Mobile Devices"
+      "type": "Mobile Devices",
+      "englishName": ""
     },
     {
       "id": "סמארטפון2",
       "name": "סמארטפון 2",
-      "type": "Mobile Devices"
+      "type": "Mobile Devices",
+      "englishName": ""
     },
     {
       "id": "Morgan Conn1",
       "name": "Morgan Conn1",
-      "type": "Mobile Devices"
+      "type": "Mobile Devices",
+      "englishName": ""
     },
     {
       "id": "Morgan Conn2",
       "name": "Morgan Conn2",
-      "type": "Mobile Devices"
+      "type": "Mobile Devices",
+      "englishName": ""
     },
     {
       "id": "TestUnknownAsset",
       "name": "Test Unknown Asset",
-      "type": "UnknownAssetType"
+      "type": "UnknownAssetType",
+      "englishName": ""
     }
   ],
   "connections": [
