@@ -581,6 +581,14 @@ const TopologyMap = () => {
         }
     }, [selectedSystemId, layoutType, rfInstance, nodes.length]);
 
+    // Handler to open ConnectionDrawer from AssetDrawer
+    // Expose as window function for simplicity
+    if (typeof window !== 'undefined') {
+        window.openConnectionDrawer = ({ parentNode, childNode, connectionLabel }) => {
+            setSelectedEdge({ parentNode, childNode, connectionLabel });
+            setDrawerOpen(true);
+        };
+    }
     return (
         <div className="topology-container" style={{ width: '100vw', height: '100vh', direction: dir }}>
             <div style={{

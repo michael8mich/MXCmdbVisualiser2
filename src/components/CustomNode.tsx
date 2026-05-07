@@ -114,7 +114,7 @@ const CustomNode = ({ data }: NodeProps) => {
                 </div>
                 <div className="node-details">
                     <div className={`node-title ${isSystem ? 'system-title' : ''}`}>{data.label}</div>
-                    <div className="node-subtitle">{translatedType}</div>
+                    <div className="node-subtitle">{isSystem && data.englishName ? data.englishName : translatedType}</div>
                 </div>
                 {isError && <div className="status-indicator error" />}
 

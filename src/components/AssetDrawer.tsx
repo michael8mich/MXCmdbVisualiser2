@@ -173,6 +173,7 @@ const AssetDrawer = ({ isOpen, onClose, asset, incomingConnections, outgoingConn
                                             borderRadius: 8,
                                             borderLeft: `4px solid ${connColor}`,
                                             cursor: 'pointer',
+                                            position: 'relative',
                                         }}
                                     >
                                         <Space direction="vertical" size={4} style={{ width: '100%' }}>
@@ -189,24 +190,51 @@ const AssetDrawer = ({ isOpen, onClose, asset, incomingConnections, outgoingConn
                                         </Space>
 
                                         {onDeleteConnection && (
-                                            <div style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)' }} onClick={e => e.stopPropagation()}>
-                                                <Popconfirm
-                                                    title={t('deleteConnectionConfirm' as any) || "Delete?"}
-                                                    onConfirm={(e) => {
-                                                        e?.stopPropagation();
-                                                        onDeleteConnection(conn.id, 'outgoing');
-                                                    }}
-                                                    okText={t('yes' as any)}
-                                                    cancelText={t('no' as any)}
-                                                >
+                                            <>
+                                                {/* New icon 20px left of delete */}
+                                                <div style={{ position: 'absolute', right: 40, top: '50%', transform: 'translateY(-50%)' }}>
                                                     <Button
                                                         type="text"
-                                                        danger
                                                         size="small"
-                                                        icon={<DeleteOutlined />}
+                                                        icon={<InfoCircleOutlined style={{ color: '#1677ff' }} />}
+                                                        onClick={e => {
+                                                            e.stopPropagation();
+                                                            if (window && window.openConnectionDrawer) {
+                                                                if (typeof onClose === 'function') onClose();
+                                                                setTimeout(() => {
+                                                                    window.openConnectionDrawer({
+                                                                        parentNode: asset,
+                                                                        childNode: {
+                                                                            id: conn.id,
+                                                                            name: conn.name,
+                                                                            type: conn.type
+                                                                        },
+                                                                        connectionLabel: conn.label
+                                                                    });
+                                                                }, 350); // Wait for drawer close animation
+                                                            }
+                                                        }}
                                                     />
-                                                </Popconfirm>
-                                            </div>
+                                                </div>
+                                                <div style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)' }} onClick={e => e.stopPropagation()}>
+                                                    <Popconfirm
+                                                        title={t('deleteConnectionConfirm' as any) || "Delete?"}
+                                                        onConfirm={(e) => {
+                                                            e?.stopPropagation();
+                                                            onDeleteConnection(conn.id, 'outgoing');
+                                                        }}
+                                                        okText={t('yes' as any)}
+                                                        cancelText={t('no' as any)}
+                                                    >
+                                                        <Button
+                                                            type="text"
+                                                            danger
+                                                            size="small"
+                                                            icon={<DeleteOutlined />}
+                                                        />
+                                                    </Popconfirm>
+                                                </div>
+                                            </>
                                         )}
                                     </Card>
                                 );
@@ -277,6 +305,7 @@ const AssetDrawer = ({ isOpen, onClose, asset, incomingConnections, outgoingConn
                                             borderRadius: 8,
                                             borderLeft: `4px solid ${connColor}`,
                                             cursor: 'pointer',
+                                            position: 'relative',
                                         }}
                                     >
                                         <Space direction="vertical" size={4} style={{ width: '100%' }}>
@@ -286,30 +315,64 @@ const AssetDrawer = ({ isOpen, onClose, asset, incomingConnections, outgoingConn
                                             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                                                 <ConnIcon size={16} color={connColor} />
                                                 <Text strong>{conn.name}</Text>
+                                                {/* Connection details icon */}
+                                                <Button
+                                                    type="text"
+                                                    icon={<InfoCircleOutlined />}
+                                                    style={{ marginLeft: 'auto' }}
+                                                    onClick={e => {
+                                                        e.stopPropagation();
+                                                        if (window && window.openConnectionDrawer) {
+                                                            window.openConnectionDrawer({
+                                                                parentNode: {
+                                                                    id: conn.id,
+                                                                    name: conn.name,
+                                                                    type: conn.type
+                                                                },
+                                                                childNode: asset,
+                                                                connectionLabel: conn.label
+                                                            });
+                                                        }
+                                                    }}
+                                                />
                                             </div>
                                             <Text type="secondary" style={{ fontSize: 12 }}>
                                                 {connTranslatedType}
                                             </Text>
                                         </Space>
                                         {onDeleteConnection && (
-                                            <div style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)' }} onClick={e => e.stopPropagation()}>
-                                                <Popconfirm
-                                                    title={t('deleteConnectionConfirm' as any) || "Delete?"}
-                                                    onConfirm={(e) => {
-                                                        e?.stopPropagation();
-                                                        onDeleteConnection(conn.id, 'incoming');
-                                                    }}
-                                                    okText={t('yes' as any)}
-                                                    cancelText={t('no' as any)}
-                                                >
+                                            <>
+                                                {/* New icon 20px left of delete */}
+                                                <div style={{ position: 'absolute', right: 48, top: '50%', transform: 'translateY(-50%)' }}>
                                                     <Button
                                                         type="text"
-                                                        danger
                                                         size="small"
-                                                        icon={<DeleteOutlined />}
+                                                        icon={<InfoCircleOutlined style={{ color: '#1677ff' }} />}
+                                                        onClick={e => {
+                                                            e.stopPropagation();
+                                                            // You can add any action here
+                                                        }}
                                                     />
-                                                </Popconfirm>
-                                            </div>
+                                                </div>
+                                                <div style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)' }} onClick={e => e.stopPropagation()}>
+                                                    <Popconfirm
+                                                        title={t('deleteConnectionConfirm' as any) || "Delete?"}
+                                                        onConfirm={(e) => {
+                                                            e?.stopPropagation();
+                                                            onDeleteConnection(conn.id, 'incoming');
+                                                        }}
+                                                        okText={t('yes' as any)}
+                                                        cancelText={t('no' as any)}
+                                                    >
+                                                        <Button
+                                                            type="text"
+                                                            danger
+                                                            size="small"
+                                                            icon={<DeleteOutlined />}
+                                                        />
+                                                    </Popconfirm>
+                                                </div>
+                                            </>
                                         )}
                                     </Card>
                                 );
