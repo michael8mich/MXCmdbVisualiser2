@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { Handle, Position, type NodeProps } from 'reactflow';
 import { useI18n } from '../i18n/I18nContext';
 
@@ -98,6 +98,57 @@ const CustomNode = ({ data }: NodeProps) => {
         animationDelay
     } as React.CSSProperties;
 
+    // Network status for Servers
+    const [netStatus, setNetStatus] = useState<'unknown' | 'reachable' | 'unreachable'>('unknown');
+    const [netTooltip, setNetTooltip] = useState<string>('');
+    const [loading, setLoading] = useState(false);
+
+    // Icon for network status
+    const NetworkIcon = () => (
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="10" cy="10" r="8" />
+            <path d="M6 10a4 4 0 0 1 8 0" />
+            <circle cx="10" cy="10" r="2" />
+        </svg>
+    );
+
+    // Spinner for loading
+    const Spinner = () => (
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ animation: 'spin 1s linear infinite' }}>
+            <circle cx="10" cy="10" r="8" stroke="#aaa" strokeWidth="3" opacity="0.2" />
+            <path d="M18 10a8 8 0 0 1-8 8" stroke="#888" strokeWidth="3" strokeLinecap="round" />
+            <style>{`@keyframes spin { 100% { transform: rotate(360deg); } }`}</style>
+        </svg>
+    );
+
+    // Color for icon
+    let netColor = '#aaa';
+    if (netStatus === 'reachable') netColor = '#22c55e';
+    if (netStatus === 'unreachable') netColor = '#ef4444';
+
+    const handleNetCheck = async (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (loading) return;
+        setLoading(true);
+        setNetTooltip('Checking...');
+        try {
+            const resp = await fetch(`http://localhost:44321/networkinfo?nameOrIp=${encodeURIComponent(data.name)}`);
+            const json = await resp.json();
+            if (json.reachable) {
+                setNetStatus('reachable');
+                setNetTooltip(`Reachable: ${json.ipAddresses?.join(', ')}`);
+            } else {
+                setNetStatus('unreachable');
+                setNetTooltip(json.error ? `Unreachable: ${json.error}` : 'Unreachable');
+            }
+        } catch (err) {
+            setNetStatus('unreachable');
+            setNetTooltip('Error contacting API');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div
             className={`custom-node ${isError ? 'error' : ''} ${isSystem ? 'system-node' : ''} ${isSelected ? 'selected-system' : ''} animate-scale-in`}
@@ -105,7 +156,7 @@ const CustomNode = ({ data }: NodeProps) => {
         >
             <Handle type="target" position={Position.Top} className="handle" />
 
-            <div className="node-content">
+            <div className="node-content" style={{ position: 'relative' }}>
                 <div
                     className={`icon-wrapper ${isError ? 'error' : ''} ${isSystem ? 'system-icon' : ''}`}
                     style={{ color: iconColor }}
@@ -117,6 +168,40 @@ const CustomNode = ({ data }: NodeProps) => {
                     <div className="node-subtitle">{isSystem && data.englishName ? data.englishName : translatedType}</div>
                 </div>
                 {isError && <div className="status-indicator error" />}
+
+                {/* Network status icon for Servers */}
+                {data.type === 'Servers' && (
+                    <button
+                        type="button"
+                        title={netTooltip || 'Check network status'}
+                        style={{
+                            position: 'absolute',
+                            top: 4,
+                            right: 4,
+                            cursor: loading ? 'wait' : 'pointer',
+                            color: netColor,
+                            background: '#222',
+                            border: 'none',
+                            borderRadius: '50%',
+                            width: 28,
+                            height: 28,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            boxShadow: '0 1px 4px rgba(0,0,0,0.12)',
+                            zIndex: 2,
+                            padding: 0,
+                            outline: 'none',
+                        }}
+                        onClick={handleNetCheck}
+                        onMouseOver={e => { if (!loading) e.currentTarget.style.cursor = 'pointer'; }}
+                        onMouseOut={e => { if (!loading) e.currentTarget.style.cursor = loading ? 'wait' : 'pointer'; }}
+                        tabIndex={0}
+                        aria-label="Check network status"
+                    >
+                        {loading ? <Spinner /> : <NetworkIcon />}
+                    </button>
+                )}
 
                 {/* Expansion Indicator */}
                 {hasChildren && (

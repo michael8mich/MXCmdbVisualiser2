@@ -13,8 +13,8 @@
       "englishName": ""
     },
     {
-      "id": "Mars01",
-      "name": "Mars01",
+      "id": "mx",
+      "name": "mx",
       "type": "Servers",
       "englishName": ""
     },
@@ -130,7 +130,7 @@
     },
     {
       "id": 404321,
-      "source": "Mars01",
+      "source": "mx",
       "target": "מערכת תפנית",
       "label": "services"
     },
